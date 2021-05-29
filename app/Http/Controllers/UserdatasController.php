@@ -31,12 +31,6 @@ class UserdatasController extends Controller
         //
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
     public function store(Request $request)
     {
         $user = $request->isMethod('put')? Userdata::findOrFail($request->id): new Userdata;

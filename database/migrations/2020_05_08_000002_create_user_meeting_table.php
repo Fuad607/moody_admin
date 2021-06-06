@@ -19,7 +19,7 @@ class CreateUserMeetingTable extends Migration
             $table->foreign('survey_id')->references('id')->on('survey');
             $table->integer('contacted_user_id')->unsigned();
             $table->foreign('contacted_user_id')->references('id')->on('users');
-            $table->integer('meeting_type');
+            $table->string('meeting_type');
         });
     }
 

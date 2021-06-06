@@ -11,90 +11,97 @@ use App\Http\Resources\Users as UserResource;
 
 class UsersController extends Controller
 {
+
     public function index()
     {
         //Get Userdata
-        $users=Users::paginate(15);
+        $users = Users::paginate(15);
+
         return UserResource::collection($users);
     }
 
     public function checkEmail($email)
     {
-        $user=Users::where('email',$email)->get();
+        $user = Users::where('email', $email)->get();
 
         return count($user);
     }
 
-  public function checkUser(Request $request)
+    public function checkUser(Request $request)
     {
-        $email=$request->input('email');
-       $password=$request->input('password');
+        $email = $request->input('email');
+        $password = $request->input('password');
 
-        $user=Users::where('email',$email)->get();
+        $user = Users::where('email', $email)->get();
+        $body = [];
+        if (sizeof($user) > 0) {
+            if (password_verify($password, $user[0]['password'])) {
+                $response = 'success';
+                $body = [ 'id' => $user[0]['id'] ];
 
-        if(sizeof($user)>0){
-            if(password_verify($password,$user[0]['password']))
-            {
-                return response()->json(array('response' => 'success', 'message' => 'success'));
-            }else{
-                return response()->json(array('response' => 'not_exist', 'message' => 'error'));
+            } else {
+                $response = 'wrong_credential';
             }
-        }else{
-            return response()->json(array('response' => 'not_exist', 'message' => 'error'));
+        } else {
+            $response = 'not_exist';
         }
 
+        return response()->json([ 'response' => $response, 'body' => $body ]);
     }
 
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request $request
+     * @param \Illuminate\Http\Request $request
+     *
      * @return \Illuminate\Http\Response
      * @throws \Exception
      */
     public function add(Request $request)
     {
         //first check email
-        $email_exits=static ::checkEmail($request->input('email'));
-        if($email_exits==0){
+        $email_exits = static::checkEmail($request->input('email'));
+        $body = [];
+        if ($email_exits == 0) {
 
             $user = new Users;
 
-            $user->nickname=(string)$request->input('nickname');
-            $user->email=$request->input('email');
-            $user->password=password_hash($request->input('password'),PASSWORD_DEFAULT);
-            $user->timestamp=time();
-            $user->location="";
-            $user->user_unique_code="";
-            $user->msc=0;
-            $user->s=0;
-            $user->p=0;
-            $user->e=0;
+            $user->nickname = (string) $request->input('nickname');
+            $user->email = (string) $request->input('email');
+            $user->password = (string) password_hash($request->input('password'), PASSWORD_DEFAULT);
+            $user->location = " ";
+            $user->user_unique_code = " ";
+            $user->timestamp = time();
+            $user->msc = 0;
+            $user->s = 0;
+            $user->p = 0;
+            $user->e = 0;
 
-            if($user->save()){
-                $response='success';
-                $id=$user->id;
-            }else{
-                $response='database_error';
+            if ($user->save()) {
+                $response = 'success';
+                $id = $user->id;
+                $body = [ 'id' => $id ];
+            } else {
+                $response = 'database_error';
             }
-        }else{
-            $response='email_exits';
+        } else {
+            $response = 'email_exits';
         }
 
-        return response()->json(array('response' => $response,'body'=>['id'=>$id]));
+        return response()->json([ 'response' => $response, 'body' => $body ]);
     }
 
     public function setData(Request $request)
     {
-        $user = $request->isMethod('put')? Users::findOrFail($request->id): new Users;
+        $user = Users::findOrFail($request->id) ;
 
-        $user->id=$request->input('id');
-        $user->name=$request->input('name');
-        $user->email=$request->input('email');
-        $user->password=$request->input('password');
-        $user->created_at=time();
+        $user->id = $request->input('id');
+        $user->name = $request->input('name');
+        $user->email = $request->input('email');
+        $user->password = $request->input('password');
+        // $user->created_at=time();
 
-        if($user->save()){
+        if ($user->save()) {
             return new UserResource($user);
         }
     }
@@ -102,12 +109,13 @@ class UsersController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
+     * @param int $id
+     *
      * @return \Illuminate\Http\Response
      */
     public function show($id)
     {
-        $user=Users::findOrFail($id);
+        $user = Users::findOrFail($id);
 
         return new UserResource($user);
     }
@@ -115,7 +123,8 @@ class UsersController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int  $id
+     * @param int $id
+     *
      * @return \Illuminate\Http\Response
      */
     public function edit($id)
@@ -126,8 +135,9 @@ class UsersController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param \Illuminate\Http\Request $request
+     * @param int                      $id
+     *
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, $id)
@@ -138,15 +148,17 @@ class UsersController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
+     * @param int $id
+     *
      * @return \Illuminate\Http\Response
      */
     public function destroy($id)
     {
         //
-        $user=Users::findOrFail($id);
-        if($user->delete()){
+        $user = Users::findOrFail($id);
+        if ($user->delete()) {
             return new UserResource($user);
         }
     }
+
 }

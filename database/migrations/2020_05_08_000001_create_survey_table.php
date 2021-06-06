@@ -19,7 +19,7 @@ class CreateSurveyTable extends Migration
             $table->foreign('user_id')->references('id')->on('users');
             $table->integer('mood_level')->nullable();
             $table->integer('relaxed_level')->nullable();
-            $table->timestamp('timestamp');
+            $table->integer('timestamp');
             $table->integer('deleted');
             $table->integer('sync');
         });

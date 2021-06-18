@@ -21,7 +21,7 @@ class UserspecialsituationController extends Controller
      */
     public function index($id)
     {
-        $user_special_situation = DB::select('SELECT user_special_situation.* FROM `user_special_situation` WHERE user_special_situation.user_id='.$id);
+        $user_special_situation = DB::select('SELECT user_special_situation.* FROM `user_special_situation` WHERE user_special_situation.survey_id='.$id);
 
         return $user_special_situation;
     }
@@ -48,7 +48,7 @@ class UserspecialsituationController extends Controller
 
         $user_special_situation->survey_id = $request->input('survey_id');
         $user_special_situation->special_situation = $request->input('special_situation');
-        $user_special_situation->special_situation_type = $request->input('special_situation_type');
+        $user_special_situation->special_situation_type =(int) $request->input('special_situation_type');
 
         if ($user_special_situation->save()) {
             return new UserspecialsituationResource($user_special_situation);

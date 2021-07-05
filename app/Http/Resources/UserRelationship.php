@@ -11,7 +11,7 @@ class UserRelationship extends JsonResource
      *
      * @param  \Illuminate\Http\Request  $request
      * @return array
-     */
+
     public function toArray($request)
     {
         //return parent::toArray($request);
@@ -20,5 +20,17 @@ class UserRelationship extends JsonResource
           'user_id'=>$this->user_id,
           'user_data'=>$this->user_data,
         ];
+    }
+     */
+
+    /**
+     * Transform the resource into an array.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return array
+     */
+    public function toArray($request)
+    {
+        return parent::toArray($request);
     }
 }

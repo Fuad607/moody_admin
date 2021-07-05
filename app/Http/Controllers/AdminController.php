@@ -64,22 +64,16 @@ class AdminController extends Controller
         $body = [];
         if ($email_exits == 0) {
 
-            $user = new Admin;
+            $admin = new Admin;
 
-            $user->nickname = (string) $request->input('nickname');
-            $user->email = (string) $request->input('email');
-            $user->password = (string) password_hash($request->input('password'), PASSWORD_DEFAULT);
-            $user->location = " ";
-            $user->user_unique_code = " ";
-            $user->timestamp = time();
-            $user->msc = 0;
-            $user->s = 0;
-            $user->p = 0;
-            $user->e = 0;
+            $admin->name = (string) $request->input('name');
+            $admin->email = (string) $request->input('email');
+            $admin->password = (string) password_hash($request->input('password'), PASSWORD_DEFAULT);
+            $admin->status = 0;
 
-            if ($user->save()) {
+            if ($admin->save()) {
                 $response = 'success';
-                $id = $user->id;
+                $id = $admin->id;
                 $body = [ 'id' => $id ];
             } else {
                 $response = 'database_error';
@@ -93,16 +87,16 @@ class AdminController extends Controller
 
     public function setData(Request $request)
     {
-        $user = Admin::findOrFail($request->id) ;
+        $admin = Admin::findOrFail($request->id) ;
 
-        $user->id = $request->input('id');
-        $user->name = $request->input('name');
-        $user->email = $request->input('email');
-        $user->password = $request->input('password');
-        // $user->created_at=time();
+        $admin->id = $request->input('id');
+        $admin->name = $request->input('name');
+        $admin->email = $request->input('email');
+        $admin->password = $request->input('password');
+        // $admin->created_at=time();
 
-        if ($user->save()) {
-            return new AdminResource($user);
+        if ($admin->save()) {
+            return new AdminResource($admin);
         }
     }
 
@@ -115,9 +109,9 @@ class AdminController extends Controller
      */
     public function show($id)
     {
-        $user = Admin::findOrFail($id);
+        $admin = Admin::findOrFail($id);
 
-        return new AdminResource($user);
+        return new AdminResource($admin);
     }
 
     /**
@@ -155,9 +149,9 @@ class AdminController extends Controller
     public function destroy($id)
     {
         //
-        $user = Admin::findOrFail($id);
-        if ($user->delete()) {
-            return new AdminResource($user);
+        $admin = Admin::findOrFail($id);
+        if ($admin->delete()) {
+            return new AdminResource($admin);
         }
     }
 

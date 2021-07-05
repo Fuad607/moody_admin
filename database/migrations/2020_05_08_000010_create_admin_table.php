@@ -18,7 +18,7 @@ class CreateAdminTable extends Migration
             $table->string('name');
             $table->string('password');
             $table->string('email')->unique();
-            $table->integer('status');
+            $table->integer('status')->default('0');
         });
     }
 

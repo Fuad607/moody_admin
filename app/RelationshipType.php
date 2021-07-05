@@ -7,14 +7,11 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 
-class Admin extends Authenticatable
+class RelationshipType extends Authenticatable
 {
 
     protected $fillable   = [
-        'name',
-        'email',
-        'password',
-        'status',
+        'type'
     ];
 
     protected $guarded = [];
@@ -25,7 +22,6 @@ class Admin extends Authenticatable
      * @var array
      */
     protected $hidden = [
-        'password',
         'remember_token',
     ];
 
@@ -38,7 +34,7 @@ class Admin extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
-    protected $table      = "admin";
+    protected $table      = "relationship_type";
     public    $timestamps = false;
 
 }

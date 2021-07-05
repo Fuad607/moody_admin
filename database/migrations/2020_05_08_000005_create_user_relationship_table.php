@@ -21,8 +21,8 @@ class CreateUserRelationshipTable extends Migration
             $table->foreign('contacted_user_id')->references('id')->on('users');
             $table->integer('relationship_type_id')->unsigned();
             $table->foreign('relationship_type_id')->references('id')->on('relationship_type');
-            $table->integer('deleted');
-            $table->integer('sync');
+            $table->integer('deleted')->default('0');
+            $table->integer('sync')->default('0');
         });
     }
 

@@ -11,11 +11,15 @@ use Illuminate\Support\Facades\DB;
 
 class SurveyController extends Controller
 {
-    public function index($id)
+    public function index($user_id,$start,$end)
     {
+        if($start!=0 && $start!="" && $end!=0 && $end!=""){
+            $time_condition=" AND timestamp>=".$start." AND timestamp<=".$end;
+        }
+
         $survey = DB::select(
             'SELECT survey.* FROM `survey`
-                WHERE survey.deleted=0 AND survey.user_id='.$id
+                WHERE survey.deleted=0 AND survey.user_id='.$user_id.$time_condition
         );
 
         return $survey;

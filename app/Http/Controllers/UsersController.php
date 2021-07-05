@@ -4,20 +4,30 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use  App\Http\Requests;
-use Illuminate\Support\Facades\Response;
-use Illuminate\Validation\ValidationException;
+use Illuminate\Support\Facades\DB;
 use App\Users;
 use App\Http\Resources\Users as UserResource;
 
 class UsersController extends Controller
 {
-
     public function index()
     {
+        $where_condition = 'WHERE ';
         //Get Userdata
-        $users = Users::paginate(15);
+        $users = DB::select('SELECT users.* FROM `users` WHERE email!=""  ');
 
-        return UserResource::collection($users);
+        return $users;
+    }
+
+    public static function getAllNotSelectedUsersById($id)
+    {
+        //Get Userdata
+        $users = DB::select(
+            'SELECT users.id,users.nickname , users.email FROM `users` WHERE users.id not in (SELECT user_relationship.contacted_user_id from user_relationship
+                    where user_relationship.user_id='.$id.')'
+        );
+
+        return $users;
     }
 
     public function checkEmail($email)
@@ -37,7 +47,7 @@ class UsersController extends Controller
         if (sizeof($user) > 0) {
             if (password_verify($password, $user[0]['password'])) {
                 $response = 'success';
-                $body = [ 'id' => $user[0]['id'] ];
+                $body = ['id' => $user[0]['id']];
 
             } else {
                 $response = 'wrong_credential';
@@ -46,7 +56,7 @@ class UsersController extends Controller
             $response = 'not_exist';
         }
 
-        return response()->json([ 'response' => $response, 'body' => $body ]);
+        return response()->json(['response' => $response, 'body' => $body]);
     }
 
     /**
@@ -66,9 +76,9 @@ class UsersController extends Controller
 
             $user = new Users;
 
-            $user->nickname = (string) $request->input('nickname');
-            $user->email = (string) $request->input('email');
-            $user->password = (string) password_hash($request->input('password'), PASSWORD_DEFAULT);
+            $user->nickname = (string)$request->input('nickname');
+            $user->email = (string)$request->input('email');
+            $user->password = (string)password_hash($request->input('password'), PASSWORD_DEFAULT);
             $user->location = " ";
             $user->user_unique_code = " ";
             $user->timestamp = time();
@@ -80,7 +90,7 @@ class UsersController extends Controller
             if ($user->save()) {
                 $response = 'success';
                 $id = $user->id;
-                $body = [ 'id' => $id ];
+                $body = ['id' => $id];
             } else {
                 $response = 'database_error';
             }
@@ -88,17 +98,20 @@ class UsersController extends Controller
             $response = 'email_exits';
         }
 
-        return response()->json([ 'response' => $response, 'body' => $body ]);
+        return response()->json(['response' => $response, 'body' => $body]);
     }
 
     public function setData(Request $request)
     {
-        $user = Users::findOrFail($request->id) ;
+        $user = Users::findOrFail($request->id);
 
         $user->id = $request->input('id');
-        $user->name = $request->input('name');
+        $user->nickname = $request->input('nickname');
         $user->email = $request->input('email');
-        $user->password = $request->input('password');
+        $user->msc = $request->input('msc');
+        $user->s = $request->input('s');
+        $user->p = $request->input('p');
+        $user->e = $request->input('e');
         // $user->created_at=time();
 
         if ($user->save()) {
@@ -117,7 +130,7 @@ class UsersController extends Controller
     {
         $user = Users::findOrFail($id);
 
-        return new UserResource($user);
+        return new UserResource();
     }
 
     /**
@@ -136,7 +149,7 @@ class UsersController extends Controller
      * Update the specified resource in storage.
      *
      * @param \Illuminate\Http\Request $request
-     * @param int                      $id
+     * @param int $id
      *
      * @return \Illuminate\Http\Response
      */

@@ -19,9 +19,10 @@ class CreateExperimentsTable extends Migration
             $table->foreign('admin_id')->references('id')->on('admin');
             $table->string('name');
             $table->text('user_data');
-            $table->integer('timestamp');
-            $table->integer('status');
-            $table->integer('deleted');
+            $table->integer('start_timestamp');
+            $table->integer('end_timestamp');
+            $table->integer('status')->default('0');
+            $table->integer('deleted')->default('0');
         });
     }
 

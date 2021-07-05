@@ -13,10 +13,6 @@ use Illuminate\Http\Request;
 |
 */
 
-Route::middleware('auth:api')->get('/user', function (Request $request) {
-    return $request->user();
-});
-
 //userrelationship
 Route::get('userrelationship/getallbyid/{id}','UserrelationshipController@getAllById');
 Route::get('userdatas/{id}','UserdatasController@show');
@@ -33,19 +29,19 @@ Route::put('users/checkUser','UsersController@checkUser');
 Route::delete('users/{id}','UsersController@destroy');
 
 //Survey
-Route::get('survey','SurveyController@index');
+Route::get('survey/{user_id}/start/{start}/end/{end}','SurveyController@index');
 Route::get('survey/{id}','SurveyController@show');
 Route::post('survey','SurveyController@store');
 Route::put('survey','SurveyController@store');
 
 //UserMeeting
-Route::get('usermeeting','UsermeetingController@index');
+Route::get('usermeeting/{survey_id}','UsermeetingController@index');
 Route::get('usermeeting/{id}','UsermeetingController@show');
 Route::post('usermeeting','UsermeetingController@store');
 Route::put('usermeeting','UsermeetingController@store');
 
 //Userspecialsituation usermeeting survey
-Route::get('userspecialsituation','UserspecialsituationController@index');
+Route::get('userspecialsituation/{survey_id}','UserspecialsituationController@index');
 Route::get('userspecialsituation/{id}','UserspecialsituationController@show');
 Route::post('userspecialsituation','UserspecialsituationController@store');
 Route::put('userspecialsituation','UserspecialsituationController@store');

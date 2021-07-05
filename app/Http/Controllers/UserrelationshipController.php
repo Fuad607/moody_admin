@@ -3,9 +3,11 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests;
-use App\Http\Resources\UserRelationship;
-use App\Userdata;
+use App\Http\Resources\UserRelationship as UserRelationshipResource;
+use App\UserRelationship;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
+use Illuminate\Http\Resources\Json\JsonResource;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\DB;
 
@@ -17,11 +19,11 @@ class UserrelationshipController extends Controller
      *
      * @return Response
      */
-    public function getAllById($id)
+    public static function getAllById($id)
     {
         //Get Userdata
         $users_relationship = DB::select(
-            'SELECT user_relationship.user_id,user_relationship.contacted_user_id,relationship_type.type,users.nickname FROM `user_relationship`
+            'SELECT user_relationship.id as user_relationship_id,user_relationship.user_id,user_relationship.contacted_user_id,relationship_type.type,users.nickname ,users.email FROM `user_relationship`
                     LEFT JOIN users on users.id=user_relationship.contacted_user_id
                     LEFT JOIN relationship_type on user_relationship.relationship_type_id=relationship_type.id
                 WHERE user_relationship.deleted=0 AND user_relationship.user_id='.$id
@@ -29,19 +31,29 @@ class UserrelationshipController extends Controller
 
         return $users_relationship;
     }
-
-
-    public function store(Request $request)
+    public static function getAllRelationType()
     {
-        $user = $request->isMethod('put') ? Userdata::findOrFail($request->id) : new Userdata;
+        //Get Userdata
+        $relationship = DB::select(
+            'SELECT * FROM `relationship_type`'
+        );
 
-        $user->id = $request->input('id');
-        $user->user_id = $request->input('user_id');
-        $user->contacted_user_id = $request->input('contacted_user_id');
-        $user->relationship_type_id = $request->input('relationship_type_id');
+        return $relationship;
+    }
 
-        if ($user->save()) {
-            return new UserdataResource($user);
+
+    public function add(Request $request)
+    {
+        $user_relationship =  new UserRelationship;
+
+        $user_relationship->user_id = $request->input('user_id');
+        $user_relationship->contacted_user_id = $request->input('contacted_user_id');
+        $user_relationship->relationship_type_id = $request->input('relationship_type_id');
+        $user_relationship->deleted=0;
+        $user_relationship->sync=0;
+
+        if ($user_relationship->save()) {
+            return "contacted user added";
         }
     }
 
@@ -54,9 +66,9 @@ class UserrelationshipController extends Controller
      */
     public function show($id)
     {
-        $user = Userdata::findOrFail($id);
+        $user = UserRelationship::findOrFail($id);
 
-        return new UserdataResource($user);
+        return new UserRelationshipResource($user);
     }
 
     /**
@@ -96,7 +108,7 @@ class UserrelationshipController extends Controller
         //
         $user = UserRelationship::findOrFail($id);
         if ($user->delete()) {
-            return new UserdataResource($user);
+            return new UserRelationshipResource($user);
         }
     }
 

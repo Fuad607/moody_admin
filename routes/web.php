@@ -25,7 +25,11 @@ Route::get('/experiment', 'ExperimentController@index')->name('experiment');
 
 Auth::routes();
 
-Route::post('/experiment', 'ExperimentController@index')->name('experiment');
+Route::get('/experiment', 'ExperimentController@index')->name('experiment');
+Route::get('/experiment/createexperiment', 'ExperimentController@createexperiment')->name('createexperiment');
+Route::get('/experimentedit', 'ExperimentController@experimentedit')->name('experimentedit');
+Route::post('/setexperiement', 'ExperimentController@setexperiement')->name('setexperiement');
+
 
 Auth::routes();
 

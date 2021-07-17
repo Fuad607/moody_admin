@@ -25,11 +25,6 @@ class SurveyController extends Controller
         return $survey;
     }
 
-    public function create()
-    {
-        //
-    }
-
     /**  user_id	mood_level	relaxed_level	timestamp	deleted	sync
      * Store a newly created resource in storage.
      *

@@ -17,10 +17,13 @@ class CreateExperimentsTable extends Migration
             $table->bigIncrements('id');
             $table->integer('admin_id')->unsigned();
             $table->foreign('admin_id')->references('id')->on('admin');
-            $table->string('name');
-            $table->text('user_data');
-            $table->integer('start_timestamp');
-            $table->integer('end_timestamp');
+            $table->string('name')->nullable();
+            $table->text('user_ids')->nullable();
+            $table->integer('frequency')->default('0');
+            $table->integer('range')->default('0');
+            $table->integer('notifications')->default('0');
+            $table->integer('start_timestamp')->default('0');
+            $table->integer('end_timestamp')->default('0');
             $table->integer('status')->default('0');
             $table->integer('deleted')->default('0');
         });

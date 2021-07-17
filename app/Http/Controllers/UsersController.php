@@ -10,7 +10,7 @@ use App\Http\Resources\Users as UserResource;
 
 class UsersController extends Controller
 {
-    public function index()
+    public static function index()
     {
         $where_condition = 'WHERE ';
         //Get Userdata

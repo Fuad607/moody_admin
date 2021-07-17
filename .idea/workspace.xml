@@ -2,53 +2,20 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="a1a29bfc-0438-47c9-a396-1a2e3ef3bb22" name="Default Changelist" comment="commit new staff">
-      <change afterPath="$PROJECT_DIR$/app/Http/Controllers/ExperimentController.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/Http/Controllers/RelationshipController.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/Http/Controllers/UserController.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/RelationshipType.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/css/bootstrap.min.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/css/bootstrap.min.css.map" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/css/dashboard.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/css/dashboard.rtl.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/js/bootstrap.bundle.min.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/js/bootstrap.bundle.min.js.map" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/js/dashboard.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/resources/views/experiment.blade.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/resources/views/experimentedit.blade.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/resources/views/layouts/main.blade.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/resources/views/relationship.blade.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/resources/views/user.blade.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/resources/views/useredit.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.env.example" beforeDir="false" afterPath="$PROJECT_DIR$/.env.example" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/moodtracker.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/moodtracker.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/php.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/php.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/Experiments.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/Http/Controllers/ExperimentsController.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/Http/Resources/Experiments.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/Admin.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Admin.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/AdminController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/AdminController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/Auth/RegisterController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/RegisterUserController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/HomeController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/HomeController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/ExperimentController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/ExperimentController.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/Http/Controllers/SurveyController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/SurveyController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/UsermeetingController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/UsermeetingController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/UserrelationshipController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/UserrelationshipController.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/Http/Controllers/UsersController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/UsersController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/UserspecialsituationController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/UserspecialsituationController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Middleware/Authenticate.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Middleware/Authenticate.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Resources/UserRelationship.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Resources/UserRelationship.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Providers/RouteServiceProvider.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Providers/RouteServiceProvider.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Survey.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Survey.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/UserMeeting.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/UserMeeting.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/UserRelationship.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/UserRelationship.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/UserSpecialSituation.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/UserSpecialSituation.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Users.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Users.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/composer.lock" beforeDir="false" afterPath="$PROJECT_DIR$/composer.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/database/migrations/2020_05_08_000005_create_user_relationship_table.php" beforeDir="false" afterPath="$PROJECT_DIR$/database/migrations/2020_05_08_000005_create_user_relationship_table.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/database/migrations/2020_05_08_000010_create_admin_table.php" beforeDir="false" afterPath="$PROJECT_DIR$/database/migrations/2020_05_08_000010_create_admin_table.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/config/database.php" beforeDir="false" afterPath="$PROJECT_DIR$/config/database.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/database/migrations/2020_05_08_000011_create_experiments_table.php" beforeDir="false" afterPath="$PROJECT_DIR$/database/migrations/2020_05_08_000011_create_experiments_table.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/auth/register.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/registeruser.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/home.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/home.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/layouts/app.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/layouts/app.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/welcome.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/welcome.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/routes/api.php" beforeDir="false" afterPath="$PROJECT_DIR$/routes/api.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/js/dashboard.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/js/dashboard.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/experiment.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/experiment.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/experimentedit.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/experimentedit.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/layouts/main.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/layouts/main.blade.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/routes/web.php" beforeDir="false" afterPath="$PROJECT_DIR$/routes/web.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -172,10 +139,10 @@
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="$PROJECT_DIR$/app/Http/Controllers" />
-      <recent name="$PROJECT_DIR$/resources/views" />
+      <recent name="$PROJECT_DIR$/app/Http/Resources" />
       <recent name="$PROJECT_DIR$/app" />
+      <recent name="$PROJECT_DIR$/resources/views" />
       <recent name="$PROJECT_DIR$/resources/views/layouts" />
-      <recent name="C:\xampp\htdocs\collective-mood-tracker-admin\app\Http\Controllers" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
       <recent name="$PROJECT_DIR$/public/js" />
@@ -227,7 +194,12 @@
       <workItem from="1624619209480" duration="31324000" />
       <workItem from="1624868322306" duration="215000" />
       <workItem from="1624868751944" duration="19870000" />
-      <workItem from="1625351592878" duration="17669000" />
+      <workItem from="1625351592878" duration="46280000" />
+      <workItem from="1625654486919" duration="11859000" />
+      <workItem from="1625818829366" duration="5875000" />
+      <workItem from="1626252266529" duration="8137000" />
+      <workItem from="1626339083907" duration="13344000" />
+      <workItem from="1626506887066" duration="11121000" />
     </task>
     <task id="LOCAL-00001" summary="commit new staff">
       <created>1624001586431</created>
@@ -250,7 +222,14 @@
       <option name="project" value="LOCAL" />
       <updated>1624315396610</updated>
     </task>
-    <option name="localTasksCounter" value="4" />
+    <task id="LOCAL-00004" summary="commit new staff">
+      <created>1625492952124</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1625492952124</updated>
+    </task>
+    <option name="localTasksCounter" value="5" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\UsersController as Users;
+use Illuminate\Support\Facades\DB;
 
 class HomeController extends Controller
 {
@@ -22,12 +23,14 @@ class HomeController extends Controller
      *
      * @return \Illuminate\Contracts\Support\Renderable
      */
-    public function index()
+    public function index(Request $request)
     {
-        $users=new Users();
-        $users->index();
+        $admin_id = auth()->user()->id;
+        $total_experiments = DB::select('SELECT COUNT(*) as total FROM `experiments` WHERE admin_id=' . $admin_id)[0]->total;
+        $total_users = DB::select('SELECT COUNT(*) as total FROM `users`' )[0]->total;
 
-        return view('home')->with('status_nav', 'dashboard');
+        return view('home', ['status_nav' => 'dashboard', 'total_experiments' => $total_experiments, 'total_users' => $total_users, 'status' => $request->status]);
+
 
     }
 }

@@ -47,20 +47,23 @@ class   SurveyController extends Controller
         }
     }
 
-    public static function getAllById($id)
+    public static function getAllById($id,$contacted_user_ids,$start,$end)
     {
         $user_relationship = DB::select('SELECT user_relationship.id,user_relationship.contacted_user_id FROM `user_relationship`
-WHERE user_relationship.deleted=0 AND user_relationship.user_id=' . $id);
+     WHERE user_relationship.deleted=0 AND user_relationship.user_id=' . $id);
         $return_array = [];
 
         $label_date = "";
         foreach ($user_relationship as $id) {
             //
             $users = DB::select('SELECT * FROM users WHERE users.id=' . $id);
-            //$start_timestamp= mktime(0, 0, 0, date("m",$experiments[0]->start_timestamp), date("d",$experiments[0]->start_timestamp), date("Y",$experiments[0]->start_timestamp));
-            $start_timestamp = $experiments[0]->start_timestamp;
-            $end_timestamp = $experiments[0]->end_timestamp;
-            $end_time = mktime(23, 59, 59, date("m", $experiments[0]->start_timestamp), date("d", $experiments[0]->start_timestamp), date("Y", $experiments[0]->start_timestamp));
+            $start_date = explode("/", $start);
+
+            $start_timestamp= mktime(0, 0, 0, date("m",$start_date[1]), date("d",$start_date[0]), date("Y",$start_date[2]));
+            $end_time = mktime(23, 59, 59, date("m", $start_date[1]), date("d", $start_date[0]), date("Y", $start_date[2]));
+
+            $end_date = explode("/", $end);
+            $end_timestamp = mktime(0, 0, 0, date("m",$end_date[1]), date("d",$end_date[0]), date("Y",$end_date[2]));
 
             $mood_level = "";
             $relaxed_level = "";
@@ -68,25 +71,17 @@ WHERE user_relationship.deleted=0 AND user_relationship.user_id=' . $id);
 
             while ($start_timestamp <= $end_timestamp) {
 
-                $experiment_result = DB::select(
+                $survey_result = DB::select(
                     'SELECT avg(survey.mood_level-5) as mood_level, avg(survey.relaxed_level-5) as relaxed_level,
                                survey.user_id , users.nickname FROM `survey`
                                LEFT JOIN users on users.id=survey.user_id
                    WHERE users.id =' . $id . '  AND survey.timestamp >=' . $start_timestamp . '  AND survey.timestamp<=' . $end_time . ' Group by user_id ,nickname'
                 );
 
-                /*   $experiment_result = DB::table('survey')
-                       ->select(DB::raw('avg(survey.mood_level-5) as mood_level, avg(survey.relaxed_level-5) as relaxed_level,
-          survey.user_id '))
-                       ->leftjoin('users','users.id','=','survey.user_id')
-                       ->whereRaw('users.id =' . $id . '  AND survey.timestamp >=' . $start_timestamp . '  AND survey.timestamp<=' . $end_time)
-                       ->groupBy('user_id')
-                       ->get();*/
-
                 $nickname = $users[0]->nickname;
-                if (!empty($experiment_result)) {
-                    $mood = round($experiment_result[0]->mood_level);
-                    $relaxed = round($experiment_result[0]->relaxed_level);
+                if (!empty($survey_result)) {
+                    $mood = round($survey_result[0]->mood_level);
+                    $relaxed = round($survey_result[0]->relaxed_level);
 
                 } else {
                     $mood = 0;

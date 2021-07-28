@@ -94,7 +94,7 @@ class ExperimentsController extends Controller
                 $mood_level .= $mood . ", ";
                 $relaxed_level .= $relaxed . ", ";
 
-                $label_date .=" '".date("d.M.Y",$start_timestamp). "', ";
+                $label_date .= " '" . date("d.M.Y", $start_timestamp) . "', ";
 
                 $start_timestamp = strtotime("+1 day", $start_timestamp);
                 $end_time = strtotime("+1 day", $end_time);
@@ -112,7 +112,50 @@ class ExperimentsController extends Controller
         }
 
         $label_date = substr($label_date, 0, -2);
-        $return_array['label_date']=$label_date;
+        $return_array['label_date'] = $label_date;
+
+        return $return_array;
+    }
+
+    public static function getAllByUsers($id)
+    {
+        $experiments = DB::select('SELECT * FROM experiments WHERE experiments.id=' . $id);
+        $user_ids = $experiments[0]->user_ids;
+        $user_ids = explode(", ", $user_ids);
+
+        $return_array = [];
+
+        foreach ($user_ids as $id) {
+            //
+            $mood_level = "";
+            $relaxed_level = "";
+            $label = "";
+
+            $experiment_results = DB::select(
+                'SELECT mood_level-5 as mood_level, survey.relaxed_level-5 as relaxed_level,survey.timestamp,
+                               survey.user_id , users.nickname FROM `survey`
+                               LEFT JOIN users on users.id=survey.user_id
+                   WHERE users.id =' . $id
+            );
+
+            foreach ($experiment_results as $experiment_result) {
+                $nickname = $experiment_result->nickname;
+
+                $mood_level .= $experiment_result->mood_level . ", ";
+                $relaxed_level .= $experiment_result->relaxed_level . ", ";
+                $label .= " '" . date("d.M.Y", $experiment_result->timestamp) . "', ";
+
+                $mood_data = substr($mood_level, 0, -2);
+                $relaxed_data = substr($relaxed_level, 0, -2);
+                $label_date = substr($label, 0, -2);
+
+                $return_array[$id]['id'] = $experiment_result->user_id;
+                $return_array[$id]['nickname'] = $nickname;
+                $return_array[$id]['label_date'] = $label_date;
+                $return_array[$id]['mood_data'] = $mood_data;
+                $return_array[$id]['relaxed_data'] = $relaxed_data;
+            }
+        }
 
         return $return_array;
     }

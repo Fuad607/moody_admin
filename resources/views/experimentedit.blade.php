@@ -120,6 +120,84 @@
        </div>
         <br>
         <canvas class="my-4 w-100" id="myChart" width="900" height="380" ></canvas>
+
+        <br>
+        <h1 class="h2">Result Per User</h1>
+        <br>
+
+        <?php
+//        $mood_data = substr($mood_level, 0, -2);
+//        $relaxed_data = substr($relaxed_level, 0, -2);
+//        $label_date = substr($label_date, 0, -2);
+
+        foreach ($experiment_survey_result_by_users as $experiment_survey_result_by_user){
+        ?>
+
+        <div class="col-1"> <p class="text-center">   <?=  $experiment_survey_result_by_user['nickname'] ?></div>
+        <canvas class="my-4 w-100" id="myChart_<?= $experiment_survey_result_by_user['id']; ?>" height="300" ></canvas>
+        <br>
+<script>
+    var ctx_<?= $experiment_survey_result_by_user['id']; ?> = document.getElementById('myChart_<?= $experiment_survey_result_by_user['id']; ?>')
+
+    const labels_<?= $experiment_survey_result_by_user['id']; ?> = [<?= $experiment_survey_result_by_user['label_date']; ?>];
+
+    var colorGenerate = function () {
+        return '#' + (Math.random().toString(16) + '0000000').slice(2, 8);
+    };
+
+    var myChart = new Chart(ctx_<?= $experiment_survey_result_by_user['id']; ?>, {
+        type: 'line',
+        data: {
+            labels: [<?= $experiment_survey_result_by_user['label_date']; ?>],
+            datasets: [
+                {
+                    label: 'Mood',
+                    fill: false,
+                     borderColor:  colorGenerate(),
+                    data: [<?= $experiment_survey_result_by_user['mood_data'] ?>],
+                },
+                {
+                    label: 'Relax',
+                    fill: false,
+                     borderColor: colorGenerate(),
+                    borderDash: [5, 5],
+                    data: [<?= $experiment_survey_result_by_user['relaxed_data'] ?>],
+                },
+            ]
+        },
+        options: {
+            responsive: true,
+            plugins: {
+                title: {
+                    display: true,
+                    text: 'Chart.js Line Chart'
+                },
+            },
+            interaction: {
+                mode: 'index',
+                intersect: false
+            },
+            scales: {
+                x: {
+                    display: true,
+                    title: {
+                        display: true,
+                        text: 'Month'
+                    }
+                },
+                y: {
+                    display: true,
+                    title: {
+                        display: true,
+                        text: 'Value'
+                    }
+                }
+            }
+        },
+    })
+</script>
+        <?php
+        } ?>
     </div>
 
     <script>
@@ -134,16 +212,13 @@
             document.getElementById('textInput').innerHTML=val;
         }
 
-
         var ctx = document.getElementById('myChart')
-
 
         var randomColorGenerator = function () {
             return '#' + (Math.random().toString(16) + '0000000').slice(2, 8);
         };
 
         const labels = [<?= $label_date; ?>];
-
 
         const data = {
             labels: labels,
@@ -155,14 +230,14 @@
                 {
                     label: '<?=  $experiment_survey_result['nickname'] ?>',
                     fill: false,
-                    backgroundColor: randomColorGenerator(),
+                  //  backgroundColor: randomColorGenerator(),
                     borderColor: randomColorGenerator(),
                     data: [<?= $experiment_survey_result['mood_data'] ?>],
                 },
                 {
                     label: '<?=  $experiment_survey_result['nickname'] ?>',
                     fill: false,
-                    backgroundColor: randomColorGenerator(),
+                   // backgroundColor: randomColorGenerator(),
                     borderColor: randomColorGenerator(),
                     borderDash: [5, 5],
                     data: [<?= $experiment_survey_result['relaxed_data'] ?>],
@@ -172,8 +247,6 @@
             ]
         };
 
-        // Graphs
-        // eslint-disable-next-line no-unused-vars
         var myChart = new Chart(ctx, {
             type: 'line',
             data: data,

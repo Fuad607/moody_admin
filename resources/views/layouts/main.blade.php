@@ -163,7 +163,6 @@
         $('body').find('.tooltip[role="tooltip"].show').remove();
     });
 
-
 </script>
 </body>
 </html>

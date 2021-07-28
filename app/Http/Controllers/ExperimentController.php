@@ -75,11 +75,14 @@ class ExperimentController extends Controller
 
         $experiment_survey = new ExperimentsController();
         $experiment_survey_results=  $experiment_survey->getAllById($request->edit_id);
+        $experiment_survey_result_by_users=  $experiment_survey->getAllByUsers($request->edit_id);
+
      /*   echo '<pre>';
         print_r($experiment_survey_results);
         exit;*/
         return view('experimentedit', ['status_nav' => 'experiment', 'experiment_result' => $experiment_result[0],
-            'experiment_survey_results' => $experiment_survey_results['result'] ,'label_date' => $experiment_survey_results['label_date']]);
+            'experiment_survey_results' => $experiment_survey_results['result'] , 'experiment_survey_result_by_users' => $experiment_survey_result_by_users,
+            'label_date' => $experiment_survey_results['label_date']]);
     }
 
     public function setexperiement(Request $request)

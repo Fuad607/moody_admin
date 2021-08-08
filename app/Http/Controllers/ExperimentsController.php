@@ -14,7 +14,7 @@ class ExperimentsController extends Controller
     {
         $where_condition = 'WHERE ';
 
-        $experiments = DB::select('SELECT experiments.* FROM experiments WHERE name is not null  AND admin_id=' . $admin_id);
+        $experiments = DB::select("SELECT experiments.* FROM experiments WHERE name !=''  AND admin_id=" . $admin_id);
 
         return $experiments;
     }

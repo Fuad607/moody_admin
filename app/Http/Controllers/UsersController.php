@@ -14,7 +14,7 @@ class UsersController extends Controller
     {
         $where_condition = 'WHERE ';
         //Get Userdata
-        $users = DB::select('SELECT users.* FROM users WHERE email is not null');
+        $users = DB::select("SELECT users.* FROM users WHERE email !='' ");
 
         return $users;
     }

@@ -8,6 +8,7 @@ use  App\Http\Requests;
 use App\Survey;
 use App\Http\Resources\Survey as SurveyResource;
 use Illuminate\Support\Facades\DB;
+use function Couchbase\passthruEncoder;
 
 class   SurveyController extends Controller
 {
@@ -20,6 +21,17 @@ class   SurveyController extends Controller
         $survey = DB::select(
             'SELECT survey.* FROM `survey`
                 WHERE survey.deleted=0 AND survey.user_id='.$user_id.$time_condition
+        );
+
+        return $survey;
+    }
+
+    public function getAll(Request $request)
+    {
+        $survey = DB::select(
+            'SELECT survey.* FROM `survey`
+                WHERE survey.deleted=0 AND survey.user_id='.$request->user_id.'
+                Order by timestamp '
         );
 
         return $survey;
@@ -47,23 +59,31 @@ class   SurveyController extends Controller
         }
     }
 
-    public static function getAllById($id,$contacted_user_ids,$start,$end)
+    public static function getAllById(Request  $request)
     {
+        $user_id=$request->user_id;
+        $contacted_user_ids=$request->contacted_user_ids;
+        $start=$request->start;
+        $end=$request->end;
+
         $user_relationship = DB::select('SELECT user_relationship.id,user_relationship.contacted_user_id FROM `user_relationship`
-     WHERE user_relationship.deleted=0 AND user_relationship.user_id=' . $id);
+     WHERE user_relationship.deleted=0 AND user_relationship.user_id=' . $user_id);
+
         $return_array = [];
 
         $label_date = "";
-        foreach ($user_relationship as $id) {
+
+        foreach ($user_relationship as $result) {
             //
-            $users = DB::select('SELECT * FROM users WHERE users.id=' . $id);
-            $start_date = explode("/", $start);
+            $users = DB::select('SELECT * FROM users WHERE users.id=' . $result->contacted_user_id);
 
-            $start_timestamp= mktime(0, 0, 0, date("m",$start_date[1]), date("d",$start_date[0]), date("Y",$start_date[2]));
-            $end_time = mktime(23, 59, 59, date("m", $start_date[1]), date("d", $start_date[0]), date("Y", $start_date[2]));
+            $start_date = explode(".", $start);
 
-            $end_date = explode("/", $end);
-            $end_timestamp = mktime(0, 0, 0, date("m",$end_date[1]), date("d",$end_date[0]), date("Y",$end_date[2]));
+            $start_timestamp= mktime(0, 0, 0,$start_date[1],$start_date[0], $start_date[2]);
+            $end_time = mktime(23, 59, 59, $start_date[1], $start_date[0],  $start_date[2]);
+
+            $end_date = explode(".", $end);
+            $end_timestamp = mktime(0, 0, 0, $end_date[1], $end_date[0], $end_date[2]);
 
             $mood_level = "";
             $relaxed_level = "";
@@ -75,7 +95,7 @@ class   SurveyController extends Controller
                     'SELECT avg(survey.mood_level-5) as mood_level, avg(survey.relaxed_level-5) as relaxed_level,
                                survey.user_id , users.nickname FROM `survey`
                                LEFT JOIN users on users.id=survey.user_id
-                   WHERE users.id =' . $id . '  AND survey.timestamp >=' . $start_timestamp . '  AND survey.timestamp<=' . $end_time . ' Group by user_id ,nickname'
+                   WHERE users.id =' . $result->contacted_user_id . '  AND survey.timestamp >=' . $start_timestamp . '  AND survey.timestamp<=' . $end_time . ' Group by user_id ,nickname'
                 );
 
                 $nickname = $users[0]->nickname;
@@ -102,9 +122,9 @@ class   SurveyController extends Controller
 
 
             if (!empty($nickname)) {
-                $return_array['result'][$id]['nickname'] = $nickname;
-                $return_array['result'][$id]['mood_data'] = $mood_data;
-                $return_array['result'][$id]['relaxed_data'] = $relaxed_data;
+                $return_array['result'][$result->contacted_user_id]['nickname'] = $nickname;
+                $return_array['result'][$result->contacted_user_id]['mood_data'] = $mood_data;
+                $return_array['result'][$result->contacted_user_id]['relaxed_data'] = $relaxed_data;
             }
         }
 

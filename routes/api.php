@@ -29,7 +29,9 @@ Route::put('users/checkUser','UsersController@checkUser');
 Route::delete('users/{id}','UsersController@destroy');
 
 //Survey
-Route::get('survey/{user_id}/start/{start}/end/{end}','SurveyController@index');
+//Route::get('survey/{user_id}/start/{start}/end/{end}','SurveyController@index');
+Route::get('survey/{user_id}','SurveyController@getAll');
+Route::get('survey/{user_id}/{start}/{end}/{contacted_user_ids}','SurveyController@getAllById');
 Route::get('survey/{id}','SurveyController@show');
 Route::post('survey','SurveyController@store');
 Route::put('survey','SurveyController@store');

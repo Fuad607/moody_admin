@@ -206,12 +206,11 @@
                                                     <span></span>
                                                 </li>
                                                 @php
-                                                    $count = 1;
                                                      $relationships= App\Http\Controllers\UserrelationshipController ::getAllById($user->id);
                                                 @endphp
                                                 @foreach($relationships as $relationship)
                                                     <li>
-                                                        <span>{{ $relationship->user_id  }}</span>
+                                                        <span>{{ $relationship->contacted_user_id  }}</span>
                                                         <span><?= $relationship->nickname ?></span>
                                                         <span><?= $relationship->email ?></span>
                                                         <span><?= $relationship->type ?></span>
@@ -230,7 +229,7 @@
                                                     </li>
                                                     <li>
                                                     </li>
-                                                    <?php $count++; ?>
+
                                                 @endforeach
                                             </ul>
                                         </div>

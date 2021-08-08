@@ -30,7 +30,5 @@ class HomeController extends Controller
         $total_users = DB::select('SELECT COUNT(*) as total FROM `users`' )[0]->total;
 
         return view('home', ['status_nav' => 'dashboard', 'total_experiments' => $total_experiments, 'total_users' => $total_users, 'status' => $request->status]);
-
-
     }
 }

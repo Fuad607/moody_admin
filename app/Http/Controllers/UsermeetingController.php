@@ -21,7 +21,7 @@ class UsermeetingController extends Controller
      */
     public function index($survey_id)
     {
-        $user_meeting = DB::select('SELECT user_meeting.* FROM `user_meeting` WHERE user_meeting.survey_id='.$survey_id);
+        $user_meeting = DB::select('SELECT user_meeting.* FROM user_meeting WHERE user_meeting.survey_id='.$survey_id);
 
         return $user_meeting;
     }

@@ -23,7 +23,7 @@ class UserrelationshipController extends Controller
     {
         //Get Userdata
         $users_relationship = DB::select(
-            'SELECT user_relationship.id as user_relationship_id,user_relationship.user_id,user_relationship.contacted_user_id,relationship_type.type,users.nickname ,users.email FROM `user_relationship`
+            'SELECT user_relationship.id as user_relationship_id,user_relationship.user_id,user_relationship.contacted_user_id,relationship_type.type,users.nickname ,users.email FROM user_relationship
                     LEFT JOIN users on users.id=user_relationship.contacted_user_id
                     LEFT JOIN relationship_type on user_relationship.relationship_type_id=relationship_type.id
                 WHERE user_relationship.deleted=0 AND user_relationship.user_id='.$id
@@ -35,7 +35,7 @@ class UserrelationshipController extends Controller
     {
         //Get Userdata
         $relationship = DB::select(
-            'SELECT * FROM `relationship_type`'
+            'SELECT * FROM relationship_type'
         );
 
         return $relationship;

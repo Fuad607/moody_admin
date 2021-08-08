@@ -19,7 +19,7 @@ class   SurveyController extends Controller
         }
 
         $survey = DB::select(
-            'SELECT survey.* FROM `survey`
+            'SELECT survey.* FROM survey
                 WHERE survey.deleted=0 AND survey.user_id='.$user_id.$time_condition
         );
 
@@ -29,7 +29,7 @@ class   SurveyController extends Controller
     public function getAll(Request $request)
     {
         $survey = DB::select(
-            'SELECT survey.* FROM `survey`
+            'SELECT survey.* FROM survey
                 WHERE survey.deleted=0 AND survey.user_id='.$request->user_id.'
                 Order by timestamp '
         );
@@ -66,7 +66,7 @@ class   SurveyController extends Controller
         $start=$request->start;
         $end=$request->end;
 
-        $user_relationship = DB::select('SELECT user_relationship.id,user_relationship.contacted_user_id FROM `user_relationship`
+        $user_relationship = DB::select('SELECT user_relationship.id,user_relationship.contacted_user_id FROM user_relationship
      WHERE user_relationship.deleted=0 AND user_relationship.user_id=' . $user_id);
 
         $return_array = [];
@@ -93,7 +93,7 @@ class   SurveyController extends Controller
 
                 $survey_result = DB::select(
                     'SELECT avg(survey.mood_level-5) as mood_level, avg(survey.relaxed_level-5) as relaxed_level,
-                               survey.user_id , users.nickname FROM `survey`
+                               survey.user_id , users.nickname FROM survey
                                LEFT JOIN users on users.id=survey.user_id
                    WHERE users.id =' . $result->contacted_user_id . '  AND survey.timestamp >=' . $start_timestamp . '  AND survey.timestamp<=' . $end_time . ' Group by user_id ,nickname'
                 );

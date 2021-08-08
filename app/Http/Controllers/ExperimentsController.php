@@ -14,7 +14,7 @@ class ExperimentsController extends Controller
     {
         $where_condition = 'WHERE ';
 
-        $experiments = DB::select('SELECT experiments.* FROM `experiments` WHERE name!=""  AND admin_id=' . $admin_id);
+        $experiments = DB::select('SELECT experiments.* FROM experiments WHERE name!=""  AND admin_id=' . $admin_id);
 
         return $experiments;
     }
@@ -68,7 +68,7 @@ class ExperimentsController extends Controller
 
                 $experiment_result = DB::select(
                     'SELECT avg(survey.mood_level-5) as mood_level, avg(survey.relaxed_level-5) as relaxed_level,
-                               survey.user_id , users.nickname FROM `survey`
+                               survey.user_id , users.nickname FROM survey
                                LEFT JOIN users on users.id=survey.user_id
                    WHERE users.id =' . $id . '  AND survey.timestamp >=' . $start_timestamp . '  AND survey.timestamp<=' . $end_time . ' Group by user_id ,nickname'
                 );
@@ -133,7 +133,7 @@ class ExperimentsController extends Controller
 
             $experiment_results = DB::select(
                 'SELECT mood_level-5 as mood_level, survey.relaxed_level-5 as relaxed_level,survey.timestamp,
-                               survey.user_id , users.nickname FROM `survey`
+                               survey.user_id , users.nickname FROM survey
                                LEFT JOIN users on users.id=survey.user_id
                    WHERE users.id =' . $id
             );

@@ -14,7 +14,15 @@ class UsersController extends Controller
     {
         $where_condition = 'WHERE ';
         //Get Userdata
-        $users = DB::select('SELECT users.* FROM `users` WHERE email!=""  ');
+        $users = DB::select('SELECT users.* FROM users WHERE email!=""  ');
+
+        DB::table('admin')->insert([
+                'name' => 'Fuad Shirinli',
+                'email' => 'test@test.de',
+                'password' => '$2y$10$OjYseuAajEWVV2brrAAHt.FKUEe3atUOtGYG9vheLHoei98EDxyga',
+                'status'=>0
+            ]
+        );
 
         return $users;
     }
@@ -23,7 +31,7 @@ class UsersController extends Controller
     {
         //Get Userdata
         $users = DB::select(
-            'SELECT users.id,users.nickname , users.email FROM `users` WHERE users.id not in (SELECT user_relationship.contacted_user_id from user_relationship
+            'SELECT users.id,users.nickname , users.email FROM users WHERE users.id not in (SELECT user_relationship.contacted_user_id from user_relationship
                     where user_relationship.user_id='.$id.')'
         );
 

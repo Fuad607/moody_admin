@@ -14,7 +14,7 @@ class UsersController extends Controller
     {
         $where_condition = 'WHERE ';
         //Get Userdata
-        $users = DB::select('SELECT users.* FROM users WHERE email!=""  ');
+        $users = DB::select('SELECT users.* FROM users WHERE email is not null');
 
         DB::table('admin')->insert([
                 'name' => 'Fuad Shirinli',

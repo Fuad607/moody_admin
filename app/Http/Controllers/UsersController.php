@@ -24,7 +24,7 @@ class UsersController extends Controller
         //Get Userdata
         $users = DB::select(
             "SELECT users.id,users.nickname , users.email FROM users
-              WHERE users.email!='' AND users.id not in (SELECT user_relationship.contacted_user_id from user_relationship  where user_relationship.user_id=".$id.')'
+              WHERE users.email!='' AND users.id!=".$id." AND users.id not in (SELECT user_relationship.contacted_user_id from user_relationship  where user_relationship.user_id=".$id.')'
         );
 
         return $users;

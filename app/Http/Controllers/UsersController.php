@@ -16,14 +16,6 @@ class UsersController extends Controller
         //Get Userdata
         $users = DB::select('SELECT users.* FROM users WHERE email is not null');
 
-        DB::table('admin')->insert([
-                'name' => 'Fuad Shirinli',
-                'email' => 'test@test.de',
-                'password' => '$2y$10$OjYseuAajEWVV2brrAAHt.FKUEe3atUOtGYG9vheLHoei98EDxyga',
-                'status'=>0
-            ]
-        );
-
         return $users;
     }
 

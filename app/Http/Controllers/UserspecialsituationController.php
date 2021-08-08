@@ -21,7 +21,7 @@ class UserspecialsituationController extends Controller
      */
     public function index($survey_id)
     {
-        $user_special_situation = DB::select('SELECT user_special_situation.* FROM `user_special_situation` WHERE user_special_situation.survey_id='.$survey_id);
+        $user_special_situation = DB::select('SELECT user_special_situation.* FROM user_special_situation WHERE user_special_situation.survey_id='.$survey_id);
 
         return $user_special_situation;
     }

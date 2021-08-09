@@ -19,7 +19,7 @@ class   SurveyController extends Controller
         }
 
         $survey = DB::select(
-            'SELECT survey.* FROM survey
+            'SELECT survey.* FROM survey`
                 WHERE survey.deleted=0 AND survey.user_id='.$user_id.$time_condition
         );
 
@@ -29,7 +29,7 @@ class   SurveyController extends Controller
     public function getAll(Request $request)
     {
         $survey = DB::select(
-            'SELECT survey.* FROM survey
+            'SELECT survey.* FROM `survey`
                 WHERE survey.deleted=0 AND survey.user_id='.$request->user_id.'
                 Order by timestamp '
         );
@@ -66,13 +66,13 @@ class   SurveyController extends Controller
         $start=$request->start;
         $end=$request->end;
 
-        $user_relationship = DB::select('SELECT user_relationship.id,user_relationship.contacted_user_id FROM user_relationship
+        $user_relationship = DB::select('SELECT user_relationship.id,user_relationship.contacted_user_id FROM `user_relationship`
      WHERE user_relationship.deleted=0 AND user_relationship.user_id=' . $user_id);
 
         $return_array = [];
 
-        $label_date = "";
-
+        $label_date = [];
+        $count=1;
         foreach ($user_relationship as $result) {
             //
             $users = DB::select('SELECT * FROM users WHERE users.id=' . $result->contacted_user_id);
@@ -85,15 +85,15 @@ class   SurveyController extends Controller
             $end_date = explode(".", $end);
             $end_timestamp = mktime(0, 0, 0, $end_date[1], $end_date[0], $end_date[2]);
 
-            $mood_level = "";
-            $relaxed_level = "";
+            $mood_level =[];
+            $relaxed_level =[];
             $nickname = "";
 
             while ($start_timestamp <= $end_timestamp) {
 
                 $survey_result = DB::select(
                     'SELECT avg(survey.mood_level-5) as mood_level, avg(survey.relaxed_level-5) as relaxed_level,
-                               survey.user_id , users.nickname FROM survey
+                               survey.user_id , users.nickname FROM `survey`
                                LEFT JOIN users on users.id=survey.user_id
                    WHERE users.id =' . $result->contacted_user_id . '  AND survey.timestamp >=' . $start_timestamp . '  AND survey.timestamp<=' . $end_time . ' Group by user_id ,nickname'
                 );
@@ -108,27 +108,30 @@ class   SurveyController extends Controller
                     $relaxed = 0;
                 }
 
-                $mood_level .= $mood . ", ";
-                $relaxed_level .= $relaxed . ", ";
+                $mood_level []= $mood ;
+                $relaxed_level []= $relaxed ;
 
-                $label_date .= " '" . date("d.M.Y", $start_timestamp) . "', ";
+                if ($count==1){
+                    $label_date []=   date("d.M.Y", $start_timestamp);
+                }
+
 
                 $start_timestamp = strtotime("+1 day", $start_timestamp);
                 $end_time = strtotime("+1 day", $end_time);
             }
 
-            $mood_data = substr($mood_level, 0, -2);
-            $relaxed_data = substr($relaxed_level, 0, -2);
+           // $mood_data = substr($mood_level, 0, -2);
+           // $relaxed_data = substr($relaxed_level, 0, -2);
 
 
             if (!empty($nickname)) {
                 $return_array['result'][$result->contacted_user_id]['nickname'] = $nickname;
-                $return_array['result'][$result->contacted_user_id]['mood_data'] = $mood_data;
-                $return_array['result'][$result->contacted_user_id]['relaxed_data'] = $relaxed_data;
+                $return_array['result'][$result->contacted_user_id]['mood_data'] = $mood_level;
+                $return_array['result'][$result->contacted_user_id]['relaxed_data'] = $relaxed_level;
             }
+            $count++;
         }
 
-        $label_date = substr($label_date, 0, -2);
         $return_array['label_date'] = $label_date;
 
         return $return_array;

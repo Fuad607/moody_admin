@@ -66,16 +66,21 @@ class   SurveyController extends Controller
         $start=$request->start;
         $end=$request->end;
 
-        $user_relationship = DB::select('SELECT user_relationship.id,user_relationship.contacted_user_id FROM user_relationship
+        $user_relationship = DB::select('SELECT  user_relationship.contacted_user_id as user_id FROM user_relationship
      WHERE user_relationship.deleted=0 AND user_relationship.user_id=' . $user_id);
+        $user_relationship = json_decode(json_encode($user_relationship), true);
+        $users_array[] = array('user_id'=>(int)$user_id);
+        $users_array=array_merge($user_relationship,$users_array);
 
         $return_array = [];
 
         $label_date = [];
         $count=1;
-        foreach ($user_relationship as $result) {
+
+        foreach ($users_array as $result) {
+
             //
-            $users = DB::select('SELECT * FROM users WHERE users.id=' . $result->contacted_user_id);
+            $users = DB::select('SELECT * FROM users WHERE users.id=' . $result['user_id']);
 
             $start_date = explode(".", $start);
 
@@ -95,7 +100,7 @@ class   SurveyController extends Controller
                     'SELECT avg(survey.mood_level-5) as mood_level, avg(survey.relaxed_level-5) as relaxed_level,
                                survey.user_id , users.nickname FROM survey
                                LEFT JOIN users on users.id=survey.user_id
-                   WHERE users.id =' . $result->contacted_user_id . '  AND survey.timestamp >=' . $start_timestamp . '  AND survey.timestamp<=' . $end_time . ' Group by user_id ,nickname'
+                   WHERE users.id =' . $result['user_id'] . '  AND survey.timestamp >=' . $start_timestamp . '  AND survey.timestamp<=' . $end_time . ' Group by user_id ,nickname'
                 );
 
                 $nickname = $users[0]->nickname;
@@ -125,9 +130,10 @@ class   SurveyController extends Controller
 
 
             if (!empty($nickname)) {
-                $return_array['result'][$result->contacted_user_id]['nickname'] = $nickname;
-                $return_array['result'][$result->contacted_user_id]['mood_data'] = $mood_level;
-                $return_array['result'][$result->contacted_user_id]['relaxed_data'] = $relaxed_level;
+                $return_array['result'][$result['user_id']]['nickname'] = $result['user_id'];
+                $return_array['result'][$result['user_id']]['nickname'] = $nickname;
+                $return_array['result'][$result['user_id']]['mood_data'] = $mood_level;
+                $return_array['result'][$result['user_id']]['relaxed_data'] = $relaxed_level;
             }
             $count++;
         }

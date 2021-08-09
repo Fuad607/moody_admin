@@ -73,17 +73,16 @@ class   SurveyController extends Controller
         $users_array=array_merge($user_relationship,$users_array);
 
         $return_array = [];
+        $return_data = [];
 
         $label_date = [];
         $count=1;
 
         foreach ($users_array as $result) {
-
             //
             $users = DB::select('SELECT * FROM users WHERE users.id=' . $result['user_id']);
 
             $start_date = explode(".", $start);
-
             $start_timestamp= mktime(0, 0, 0,$start_date[1],$start_date[0], $start_date[2]);
             $end_time = mktime(23, 59, 59, $start_date[1], $start_date[0],  $start_date[2]);
 
@@ -92,8 +91,9 @@ class   SurveyController extends Controller
 
             $mood_level =[];
             $relaxed_level =[];
-            $nickname = "";
 
+            if (!empty($users)) {
+                $nickname = $users[0]->nickname;
             while ($start_timestamp <= $end_timestamp) {
 
                 $survey_result = DB::select(
@@ -103,7 +103,7 @@ class   SurveyController extends Controller
                    WHERE users.id =' . $result['user_id'] . '  AND survey.timestamp >=' . $start_timestamp . '  AND survey.timestamp<=' . $end_time . ' Group by user_id ,nickname'
                 );
 
-                $nickname = $users[0]->nickname;
+
                 if (!empty($survey_result)) {
                     $mood = round($survey_result[0]->mood_level);
                     $relaxed = round($survey_result[0]->relaxed_level);
@@ -128,16 +128,16 @@ class   SurveyController extends Controller
            // $mood_data = substr($mood_level, 0, -2);
            // $relaxed_data = substr($relaxed_level, 0, -2);
 
-
-            if (!empty($nickname)) {
-                $return_array['result'][$result['user_id']]['nickname'] = $result['user_id'];
-                $return_array['result'][$result['user_id']]['nickname'] = $nickname;
-                $return_array['result'][$result['user_id']]['mood_data'] = $mood_level;
-                $return_array['result'][$result['user_id']]['relaxed_data'] = $relaxed_level;
+                $return_data[]=array(
+                    'id'=>$result['user_id'],
+                    'nickname'=>$nickname,
+                    'mood_data'=>$mood_level,
+                    'relaxed_data'=>$relaxed_level
+                );
             }
             $count++;
         }
-
+        $return_array['result']=$return_data;
         $return_array['label_date'] = $label_date;
 
         return $return_array;

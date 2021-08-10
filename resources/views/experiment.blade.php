@@ -44,11 +44,11 @@
                 <table class="table table-hover table-vcenter">
                     <thead class="thead-light">
                     <tr>
-                        <th scope="col">#</th>
-                        <th scope="col">Name</th>
-                        <th scope="col">Start</th>
-                        <th scope="col">End</th>
-                        <th scope="col"></th>
+                        <th scope="col-lg">#</th>
+                        <th scope="col-lg">Name</th>
+                        <th scope="col-lg">Start</th>
+                        <th scope="col-lg">End</th>
+                        <th scope="col-lg"></th>
                     </tr>
                     </thead>
                     <tbody>
@@ -91,8 +91,8 @@
                     @csrf
                     <div class="modal-body">
                         <div class="form-group row">
-                            <label for="relationshipType" class="col-sm-2 col-form-label">Type:</label>
-                            <div class="col-sm-10">
+                            <label for="relationshipType" class="col-lg-2 col-form-label">Type:</label>
+                            <div class="col-lg-10">
                                 <input type="text" class="form-control" id="type" name="type" value="">
                             </div>
                         </div>

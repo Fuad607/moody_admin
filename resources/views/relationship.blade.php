@@ -75,8 +75,8 @@
                                         <div class="modal-body">
                                             <div class="form-group row">
                                                 <label for="relationshipType"
-                                                       class="col-sm-2 col-form-label">Type:</label>
-                                                <div class="col-sm-10">
+                                                       class="col-lg-2 col-form-label">Type:</label>
+                                                <div class="col-lg-10">
                                                     <input type="text" class="form-control" id="type" name="type"
                                                            value="{{$relation_type->type}}">
                                                 </div>
@@ -114,8 +114,8 @@
                     @csrf
                     <div class="modal-body">
                         <div class="form-group row">
-                            <label for="relationshipType" class="col-sm-2 col-form-label">Type:</label>
-                            <div class="col-sm-10">
+                            <label for="relationshipType" class="col-lg-2 col-form-label">Type:</label>
+                            <div class="col-lg-10">
                                 <input type="text" class="form-control" id="type" name="type" value="">
                             </div>
                         </div>

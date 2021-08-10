@@ -161,8 +161,8 @@
                                             <div class="modal-body">
                                                 <div class="row">
                                                     <label for="relationshipType"
-                                                           class="col-sm-2 col-form-label">Users:</label>
-                                                    <div class="col-sm-4 form-group ">
+                                                           class="col-lg-2 col-form-label">Users:</label>
+                                                    <div class="col-lg-4 form-group ">
                                                         <select name="contacted_user_id" id="contacted_user_id"
                                                                 class="form-select">
                                                             <?php
@@ -175,7 +175,7 @@
                                                         </select>
                                                     </div>
 
-                                                    <div class="col-sm-4 form-group ">
+                                                    <div class="col-lg-4 form-group ">
                                                         <select name="relationship_type_id" id="relationship_type_id"
                                                                 class="form-select">
                                                             <?php
@@ -187,7 +187,7 @@
                                                             ?>
                                                         </select>
                                                     </div>
-                                                    <div class="col-sm-2 form-group ">
+                                                    <div class="col-lg-2 form-group ">
                                                         <input type="hidden" class="form-control" id="user_id"
                                                                name="user_id" value="{{$user->id}}">
                                                         <button type="submit" class="btn btn-primary">Save</button>
@@ -262,8 +262,8 @@
                     @csrf
                     <div class="modal-body">
                         <div class="form-group row">
-                            <label for="relationshipType" class="col-sm-2 col-form-label">Type:</label>
-                            <div class="col-sm-10">
+                            <label for="relationshipType" class="col-lg-2 col-form-label">Type:</label>
+                            <div class="col-lg-10">
                                 <input type="text" class="form-control" id="type" name="type" value="">
                             </div>
                         </div>

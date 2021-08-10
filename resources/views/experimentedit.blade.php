@@ -26,14 +26,14 @@
                     <div class="row">
                         <label for="relationshipType"
                                class="col-2 col-form-label">Name:</label>
-                        <div class="col-10 form-group ">
+                        <div class="col-lg-10 form-group ">
                             <input type="text" class="form-control" id="name"
                                    name="name"
                                    value="{{ $experiment_result->name }}">
                         </div>
                         <label for="relationshipType"
-                               class="col-2 col-form-label">Notifications:</label>
-                        <div class="col-10 form-group ">
+                               class="col-lg-2 col-form-label">Notifications:</label>
+                        <div class="col-lg-10 form-group ">
                             <select name="notifications" id="notifications"
                                     class="form-select">
                                 <?php
@@ -50,39 +50,39 @@
                             </select>
                         </div>
                         <label for="relationshipType"
-                               class="col-2 col-form-label">Frequency:</label>
-                        <div class="col-4 form-group ">
+                               class="col-lg-2 col-form-label">Frequency:</label>
+                        <div class="col-lg-4 form-group ">
                             <input type="number" class="form-control" id="frequency"
                                    name="frequency"
                                    value="{{ $experiment_result->frequency }}">
                         </div>
                         <label for="relationshipType"
-                               class="col-2 col-form-label">Range:</label>
-                        <div class="col-3 form-group ">
+                               class="col-lg-2 col-form-label">Range:</label>
+                        <div class="col-lg-3 form-group ">
                             <input type="range" class="form-range" id="range" onchange="updateTextInput(this.value);"
                                    name="range"  min="60" max="240"
                                    value="{{ $experiment_result->range }}">
                         </div>
-                        <div class="col-1 form-group ">
+                        <div class="col-lg-1 form-group ">
                             <span type="text" id="textInput">{{ $experiment_result->range }}</span> min
                         </div>
                         <label for="relationshipType"
-                               class="col-2 col-form-label">Start Date:</label>
-                        <div class="col-4 form-group ">
+                               class="col-lg-2 col-form-label">Start Date:</label>
+                        <div class="col-lg-4 form-group ">
                             <input type="text" class="form-control start_timestamp" id="start_timestamp"
                                    name="start_timestamp"
                                    value="{{ $experiment_result->start_timestamp>0? date("m/d/Y",$experiment_result->start_timestamp): date("m/d/Y") }}">
                         </div>
                         <label for="relationshipType"
-                               class="col-2 col-form-label">End Date:</label>
-                        <div class="col-4 form-group ">
+                               class="col-lg-2 col-form-label">End Date:</label>
+                        <div class="col-lg-4 form-group ">
                             <input type="text" class="form-control end_timestamp" id="end_timestamp"
                                    name="end_timestamp"
                                    value="{{ $experiment_result->end_timestamp>0? date("m/d/Y",$experiment_result->end_timestamp): date("m/d/Y")  }}">
                         </div>
                         <label for="relationshipType"
-                               class="col-2 col-form-label">User:</label>
-                        <div class="col-10 form-group ">
+                               class="col-lg-2 col-form-label">User:</label>
+                        <div class="col-lg-10 form-group ">
                             <?php
                             $selected_users = explode(",", $experiment_result->user_ids);
                             $users = App\Http\Controllers\UsersController::index();
@@ -94,7 +94,7 @@
                                 $checked = "";
                             }
                             ?>
-                            <div class="col-2 form-check form-check-inline">
+                            <div class="col-lg-2 form-check form-check-inline">
                                 <input class="form-check-input" type="checkbox" id="{{ $user->id }}"
                                        value="{{ $user->id }}" name="users[{{ $user->id }}]"   <?= $checked; ?>>
                                 <label class="form-check-label" for="{{ $user->id }}">{{ $user->nickname }}</label>
@@ -115,8 +115,8 @@
         <h1 class="h2">Experiment Result</h1>
         <br>
        <div class="row">
-           <div class="col-1"> <p style="border-style: solid;" class="text-center"> Mood</div>
-           <div class="col-1"> <p style="border-style: dashed;" class="text-center"> Relax</div>
+           <div class="col-lg-1"> <p style="border-style: solid;" class="text-center"> Mood</div>
+           <div class="col-lg-1"> <p style="border-style: dashed;" class="text-center"> Relax</div>
        </div>
         <br>
         <canvas class="my-4 w-100" id="myChart" width="900" height="380" ></canvas>
@@ -133,7 +133,7 @@
         foreach ($experiment_survey_result_by_users as $experiment_survey_result_by_user){
         ?>
 
-        <div class="col-1"> <p class="text-center">   <?=  $experiment_survey_result_by_user['nickname'] ?></div>
+        <div class="col-lg-1"> <p class="text-center">   <?=  $experiment_survey_result_by_user['nickname'] ?></div>
         <canvas class="my-4 w-100" id="myChart_<?= $experiment_survey_result_by_user['id']; ?>" height="300" ></canvas>
         <br>
 <script>

@@ -28,11 +28,23 @@ class   SurveyController extends Controller
 
     public function getAll(Request $request)
     {
-        $survey = DB::select(
+        $survey_results = DB::select(
             'SELECT survey.* FROM `survey`
                 WHERE survey.deleted=0 AND survey.user_id=' . $request->user_id . '
                 Order by timestamp '
         );
+
+        $return_array = [];
+        foreach ($survey_results as $result) {
+            $return_array[] = array(
+                'mood_level' => $result->mood_level-5,
+                'relaxed_level' => $result->relaxed_level-5,
+                'hour' => date("H:i", $result->timestamp),
+                'date' => date("d.M.Y", $result->timestamp)
+            );
+        }
+
+        return $return_array;
 
         return $survey;
     }

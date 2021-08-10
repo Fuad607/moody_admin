@@ -19,7 +19,7 @@ class   SurveyController extends Controller
         }
 
         $survey = DB::select(
-            'SELECT survey.* FROM survey`
+            'SELECT survey.* FROM survey
                 WHERE survey.deleted=0 AND survey.user_id=' . $user_id . $time_condition
         );
 
@@ -29,11 +29,11 @@ class   SurveyController extends Controller
     public function getAll(Request $request)
     {
         $survey_results = DB::select(
-            'SELECT survey.* FROM `survey`
+            'SELECT survey.* FROM survey
                 WHERE survey.deleted=0 AND survey.user_id=' . $request->user_id . '
                 Order by timestamp '
         );
-
+/*
         $return_array = [];
         foreach ($survey_results as $result) {
             $return_array[] = array(
@@ -42,9 +42,9 @@ class   SurveyController extends Controller
                 'hour' => date("H:i", $result->timestamp),
                 'date' => date("d.M.Y", $result->timestamp)
             );
-        }
+        }*/
 
-        return $return_array;
+        return $survey_results;
 
         return $survey;
     }
@@ -62,7 +62,7 @@ class   SurveyController extends Controller
         $survey->user_id = $request->input('user_id');
         $survey->mood_level = $request->input('mood_level');
         $survey->relaxed_level = $request->input('relaxed_level');
-        $survey->timestamp = time();
+        $survey->timestamp =  (int)$request->input('timestamp');
         $survey->deleted = 0;
         $survey->sync = (int)$request->input('sync');
 

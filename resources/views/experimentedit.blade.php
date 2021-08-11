@@ -41,7 +41,7 @@
 
                                 foreach ($array as $id => $value) {
                                     if ($experiment_result->notifications == $id) {
-                                        echo '<option value="' . $id . '">' . $value . '</option>';
+                                        echo '<option value="' . $id . '" selected>' . $value . '</option>';
                                     } else {
                                         echo '<option value="' . $id . '">' . $value . '</option>';
                                     }
@@ -58,14 +58,23 @@
                         </div>
                         <label for="relationshipType"
                                class="col-lg-2 col-form-label">Range:</label>
-                        <div class="col-lg-3 form-group ">
-                            <input type="range" class="form-range" id="range" onchange="updateTextInput(this.value);"
-                                   name="range"  min="60" max="240"
-                                   value="{{ $experiment_result->range }}">
+                        <div class="col-lg-4 form-group ">
+                            <select name="range" id="range"
+                                    class="form-select">
+                                <?php
+                                $array_range = [1 => "Morning", 2 => "Afternoon"];
+
+                                foreach ($array_range as $id => $value) {
+                                    if ($experiment_result->range == $id) {
+                                        echo '<option value="' . $id . '" selected>' . $value . '</option>';
+                                    } else {
+                                        echo '<option value="' . $id . '">' . $value . '</option>';
+                                    }
+                                }
+                                ?>
+                            </select>
                         </div>
-                        <div class="col-lg-1 form-group ">
-                            <span type="text" id="textInput">{{ $experiment_result->range }}</span> min
-                        </div>
+
                         <label for="relationshipType"
                                class="col-lg-2 col-form-label">Start Date:</label>
                         <div class="col-lg-4 form-group ">

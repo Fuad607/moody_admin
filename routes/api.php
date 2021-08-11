@@ -47,3 +47,7 @@ Route::get('userspecialsituation/{survey_id}','UserspecialsituationController@in
 Route::get('userspecialsituation/{id}','UserspecialsituationController@show');
 Route::post('userspecialsituation','UserspecialsituationController@store');
 Route::put('userspecialsituation','UserspecialsituationController@store');
+
+//experiemnt
+Route::get('experiment/{user_id}','ExperimentsController@getCurrentExperiment');
+

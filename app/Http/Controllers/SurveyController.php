@@ -140,7 +140,7 @@ class   SurveyController extends Controller
                     $relaxed_level [] = $relaxed;
 
                     if ($count == 1) {
-                        $label_date [] = date("d.M.Y", $start_timestamp);
+                        $label_date [] = date("d.m", $start_timestamp);
                     }
 
 

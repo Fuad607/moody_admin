@@ -25,7 +25,7 @@ class ExperimentsController extends Controller
 
         $experiments = DB::select("SELECT experiments.* FROM experiments WHERE  start_timestamp <" . time() . " AND end_timestamp >" . time() . "  AND user_ids IN ('" . $request->user_id . "')  AND name !=''");
 
-        return $experiments;
+        return array('body'=>$experiments);
     }
 
     /**

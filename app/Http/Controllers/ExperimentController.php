@@ -80,7 +80,7 @@ class ExperimentController extends Controller
      /*   echo '<pre>';
         print_r($experiment_survey_results);
         exit;*/
-        return view('experimentedit', ['status_nav' => 'experiment', 'experiment_result' => $experiment_result[0],
+        return view('experimentedit', ['status_nav' => 'experiment', 'experiment_result' => $experiment_result[0],'status'=>$request->status,
             'experiment_survey_results' => $experiment_survey_results['result'] , 'experiment_survey_result_by_users' => $experiment_survey_result_by_users,
             'label_date' => $experiment_survey_results['label_date']]);
     }

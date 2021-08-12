@@ -60,8 +60,8 @@
                     <tr>
                         <td>{{ $count }}</td>
                         <td>{{$experiemnt_result->name}}</td>
-                        <td>{{$experiemnt_result->start_timestamp}}</td>
-                        <td>{{$experiemnt_result->end_timestamp}}</td>
+                        <td>{{ date("d.M.Y", $experiemnt_result->start_timestamp) }}</td>
+                        <td>{{ date("d.M.Y", $experiemnt_result->end_timestamp) }}</td>
                         <td class="text-right">
                             <button type="button" class="btn btn-secondary btn-sm js-tooltip-enabled "
                                     data-placement="bottom" title="Relationship" data-toggle="tooltip"

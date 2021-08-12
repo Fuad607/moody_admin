@@ -23,7 +23,7 @@ class ExperimentsController extends Controller
     {
         $where_condition = 'WHERE ';
 
-        $experiments = DB::select("SELECT experiments.* FROM experiments WHERE  start_timestamp <" . time() . " AND end_timestamp >" . time() . "  AND user_ids IN (" . $request->user_id . ")  AND name !=''");
+        $experiments = DB::select("SELECT experiments.* FROM experiments WHERE  start_timestamp <" . time() . " AND end_timestamp >" . time() . "  AND user_ids IN ('" . $request->user_id . "') ");
 
         return $experiments;
     }

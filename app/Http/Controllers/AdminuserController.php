@@ -9,10 +9,11 @@ use App\Http\Controllers\UsersController as Users;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Foundation\Auth\RegistersUsers;
 
-class RegisterUserController extends Controller
+class AdminuserController extends Controller
 {
 
     use RegistersUsers;
@@ -39,34 +40,14 @@ class RegisterUserController extends Controller
      *
      * @return \Illuminate\Contracts\Support\Renderable
      */
-    public function index()
+    public function index(Request $request)
     {
-         return  view('registeruser',['status_nav'=> 'registeruser']);
+        $admins = new AdminController();
+        $admin_results = $admins->index();
+
+        return view('admin', ['status_nav' => 'admin', 'admin_results' => $admin_results, 'status' => $request->status]);
     }
 
-    /**
-     * Get a validator for an incoming registration request.
-     *
-     * @param array $data
-     * @return \Illuminate\Contracts\Validation\Validator
-     */
-
-
-    /**
-     * Create a new user instance after a valid registration.
-     *
-     * @param array $data
-     * @return \App\Admin
-     */
-    protected function create(array $data)
-    {
-        return Admin::create([
-            'name' => $data['name'],
-            'email' => $data['email'],
-            'password' => Hash::make($data['password']),
-            'status' => '0'
-        ]);
-    }
     protected function validator(array $data)
     {
         return Validator::make($data, [
@@ -75,7 +56,8 @@ class RegisterUserController extends Controller
             'password' => ['required', 'string', 'min:8', 'confirmed'],
         ]);
     }
-    public function register(Request $request)
+
+    public function addadmin(Request $request)
     {
         $this->validator($request->all())->validate();
 
@@ -83,13 +65,30 @@ class RegisterUserController extends Controller
         $admin_result = json_decode($admin->add($request)->getContent());
 
         if ($admin_result->response == "email_exits") {
-            $return_message['error']=  'This E-Mail already used!';
+            $return_message['status'] = 2;
         } elseif ($admin_result->response == "success") {
-            $return_message['status']=  'The user successfully added!';
+            $return_message['status'] = 4;
         }
 
-        $return_message['status_nav']= 'registeruser';
+        return Redirect::route('admin', $return_message);
 
-        return view('registeruser',$return_message );
+    }
+    public function editadmin(Request $request)
+    {
+        $admin = new AdminController();
+        $admin->setData($request);
+
+        $return_message['status'] = 1;
+
+        return Redirect::route('admin', $return_message);
+     }
+
+    public function deleteadmin(Request $request)
+    {
+        $admin=new AdminController();
+        $admin->destroy($request->id);
+        $return_message['status'] = 3;
+
+        return Redirect::route('admin', $return_message);
     }
 }

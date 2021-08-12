@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use  App\Http\Requests;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Response;
 use Illuminate\Validation\ValidationException;
 use App\Admin;
@@ -14,10 +15,9 @@ class AdminController extends Controller
 
     public function index()
     {
-        //Get Userdata
-        $admin = Admin::paginate(15);
+        $admin = DB::select("SELECT admin.* FROM admin WHERE email !='' and name!='' ");
 
-        return AdminResource::collection($admin);
+        return $admin;
     }
 
     public function checkEmail($email)
@@ -91,8 +91,8 @@ class AdminController extends Controller
 
         $admin->id = $request->input('id');
         $admin->name = $request->input('name');
-        $admin->email = $request->input('email');
-        $admin->password = $request->input('password');
+ /*       $admin->email = $request->input('email');
+        $admin->password = $request->input('password');*/
         // $admin->created_at=time();
 
         if ($admin->save()) {

@@ -48,6 +48,21 @@ class UserController extends Controller
         return view('user', ['status_nav' => 'user', 'users_result' => $users_result, 'status' => $request->status]);
     }
 
+    public function adduser(Request $request)
+    {
+        $users = new UsersController();
+        $user = json_decode( $users->add($request)->getContent());
+
+
+        if ($user->response == "email_exits") {
+            $return_message['status'] = 4;
+        } elseif ($user->response == "success") {
+            $return_message['status'] = 5;
+        }
+
+        return Redirect::route('user', $return_message);
+     }
+
     public function edituser(Request $request)
     {
         $users = new UsersController();

@@ -23,14 +23,14 @@ class ExperimentsController extends Controller
     {
         $where_condition = 'WHERE ';
 
-        $experiments = DB::select("SELECT experiments.* FROM experiments WHERE  start_timestamp <=" . time() . " AND end_timestamp >=" . time() );
+        $experiments = DB::select("SELECT experiments.* FROM experiments WHERE  start_timestamp <=" . time() . " AND end_timestamp >=" . time());
 
-        $user_ids=$experiments[0]->user_ids;
+        $user_ids = $experiments[0]->user_ids;
         $user_ids = explode(", ", $user_ids);
-        $return_array=[];
+        $return_array = [];
         foreach ((array)$user_ids as $id) {
-            if($id==$request->user_id){
-                $return_array=$experiments;
+            if ($id == $request->user_id) {
+                $return_array = $experiments;
             }
         }
         return $return_array;
@@ -271,4 +271,67 @@ class ExperimentsController extends Controller
         }
     }
 
+
+    public static function getAllForCsv($id)
+    {
+        $experiments = DB::select('SELECT * FROM experiments WHERE experiments.id=' . $id);
+        $user_ids = $experiments[0]->user_ids;
+        $user_ids = explode(", ", $user_ids);
+        $return_array = [];
+        $return_array[] = array('Nickname', 'Mood level', 'Relaxation level', 'Date created', 'Contacted user', 'Contacted type', 'Special situation', 'Type');
+        $survey_result = DB::select(
+            "SELECT survey.mood_level-5 as mood_level, survey.relaxed_level-5 as relaxed_level,survey.timestamp,
+                               survey.user_id , users.nickname,user_meeting.meeting_type,user_meeting.contacted_user_id,user_special_situation.special_situation,
+                               user_special_situation.special_situation_type
+                               FROM survey
+                               LEFT JOIN users on users.id=survey.user_id
+                               LEFT JOIN user_meeting on user_meeting.survey_id=survey.id
+                               LEFT JOIN user_special_situation on user_special_situation.survey_id=survey.id
+                  WHERE  survey.timestamp >=" . $experiments[0]->start_timestamp . "  AND survey.timestamp<=" . $experiments[0]->end_timestamp . "  ORDER by survey.user_id,survey.timestamp"
+        );
+
+        foreach ($survey_result as $result) {
+           if(in_array($result->user_id,$user_ids)){
+               $contacted_user_id = "";
+               $meeting_type = "";
+               $special_situation_type = "";
+               if ($result->contacted_user_id > 0) {
+                   $user = self::getUser($result->contacted_user_id);
+                   $contacted_user_id = $user[0]->nickname;
+               }
+               $date_time = date("d.M.Y", $result->timestamp);
+               switch ($result->meeting_type) {
+                   case 1:
+                       $meeting_type = "F2F";
+                       break;
+                   case 2:
+                       $meeting_type = "Video";
+                       break;
+                   case 3:
+                       $meeting_type = "Other";
+                       break;
+
+               };
+               if(!empty($result->special_situation)){
+                   if ($result->special_situation_type == 0) {
+                       $special_situation_type="Negative";
+                   } elseif ($result->special_situation_type == 1) {
+                       $special_situation_type="Positive";
+                   }
+               }
+
+               $return_array[] = array($result->nickname, $result->mood_level, $result->relaxed_level, $date_time, $contacted_user_id, $meeting_type, $result->special_situation,$special_situation_type);
+
+           }
+        }
+
+        return $return_array;
+    }
+
+    public static function getUser($id)
+    {
+        $user = DB::select("SELECT users.* FROM users WHERE users.id=" . $id);
+
+        return $user;
+    }
 }

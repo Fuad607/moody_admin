@@ -104,21 +104,25 @@ class ExperimentController extends Controller
         return Redirect::route('experimentedit', ['edit_id' => $request->id,'status'=>1]);
     }
 
-    public function register(Request $request)
+    public function downloadexperiment(Request $request)
     {
-        $this->validator($request->all())->validate();
+        header('Content-Type: text/csv; charset=utf-8');
+        header('Content-Disposition: attachment; filename=data.csv');
 
-        $admin = new AdminController();
-        $admin_result = json_decode($admin->add($request)->getContent());
+        $experiment_survey = new ExperimentsController();
+        $survey_results=  $experiment_survey->getAllForCsv($request->id);
 
-        if ($admin_result->response == "email_exits") {
-            $return_message['error'] = 'This E-Mail already used!';
-        } elseif ($admin_result->response == "success") {
-            $return_message['status'] = 'The user successfully added!';
+        // create a file pointer connected to the output stream
+        $fp = fopen('php://output', 'w');
+
+        //$fp = fopen('data.csv', 'w');
+
+        foreach ($survey_results as $fields) {
+            fputcsv($fp, $fields);
         }
 
-        $return_message['status_nav'] = 'registeruser';
+        fclose($fp);
 
-        return view('registeruser', $return_message);
+        exit;
     }
 }

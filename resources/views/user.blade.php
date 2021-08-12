@@ -24,10 +24,24 @@
                     </div>
                 </div>
             @endif
-                @if ($status==3)
+            @if ($status==3)
                 <div class="col-lg-12">
                     <div class="alert alert-danger" role="alert">
                         The user relationship deleted!
+                    </div>
+                </div>
+            @endif
+            @if ($status==4)
+                <div class="col-lg-12">
+                    <div class="alert alert-danger" role="alert">
+                        The user email already exist!
+                    </div>
+                </div>
+            @endif
+            @if ($status==5)
+                <div class="col-lg-12">
+                    <div class="alert alert-success" role="alert">
+                        The user successfully added!
                     </div>
                 </div>
             @endif
@@ -35,10 +49,10 @@
                 class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
                 <h1 class="h2">{{ __('Users') }}</h1>
             </div>
-        <!--            <div class="col-lg-2">
+            <div class="col-lg-2">
                 <button type="button" class="btn btn-primary float-left" data-toggle="modal"
                         data-target="#addUser">{{ __('Add user') }}</button>
-            </div>-->
+            </div>
             <div class="col-lg-10"></div>
             <div class="table-responsive pt-3">
                 <table class="table table-hover table-vcenter">
@@ -94,38 +108,45 @@
                                         @csrf
                                         <div class="modal-body">
                                             <div class="row">
-                                                <label for="relationshipType"
+                                                <label for="nickname"
                                                        class="col-sm-2 col-form-label">Nickname:</label>
                                                 <div class="col-sm-10 form-group ">
                                                     <input type="text" class="form-control" id="nickname"
                                                            name="nickname"
                                                            value="{{$user->nickname}}">
                                                 </div>
-                                                <label for="relationshipType"
+                                                <label for="email"
                                                        class="col-sm-2 col-form-label">Email:</label>
                                                 <div class="col-sm-10 form-group ">
                                                     <input type="text" class="form-control" id="email" name="email"
                                                            value="{{$user->email}}">
                                                 </div>
-                                                <label for="relationshipType"
+                                                <label for="password"
+                                                       class="col-sm-2 col-form-label">Password:</label>
+                                                <div class="col-sm-10 form-group ">
+                                                    <input type="password" class="form-control" id="password"
+                                                           name="password"
+                                                           value="">
+                                                </div>
+                                                <label for="msc"
                                                        class="col-sm-2 col-form-label">Msc:</label>
                                                 <div class="col-sm-10 form-group ">
                                                     <input type="text" class="form-control " id="msc" name="msc"
                                                            value="{{$user->msc}}">
                                                 </div>
-                                                <label for="relationshipType"
+                                                <label for="s"
                                                        class="col-sm-2 col-form-label">S:</label>
                                                 <div class="col-sm-10 form-group ">
                                                     <input type="text" class="form-control" id="s" name="s"
                                                            value="{{$user->s}}">
                                                 </div>
-                                                <label for="relationshipType"
+                                                <label for="p"
                                                        class="col-sm-2 col-form-label">P:</label>
                                                 <div class="col-sm-10 form-group ">
                                                     <input type="text" class="form-control" id="p" name="p"
                                                            value="{{$user->p}}">
                                                 </div>
-                                                <label for="relationshipType"
+                                                <label for="e"
                                                        class="col-sm-2 col-form-label">E:</label>
                                                 <div class="col-sm-10 form-group ">
                                                     <input type="text" class="form-control" id="e" name="e"
@@ -196,7 +217,6 @@
                                             </div>
                                         </form>
                                         <div class="form-group row">
-
                                             <ul class="list">
                                                 <li>
                                                     <span>ID</span>
@@ -206,7 +226,7 @@
                                                     <span></span>
                                                 </li>
                                                 @php
-                                                     $relationships= App\Http\Controllers\UserrelationshipController ::getAllById($user->id);
+                                                    $relationships= App\Http\Controllers\UserrelationshipController ::getAllById($user->id);
                                                 @endphp
                                                 @foreach($relationships as $relationship)
                                                     <li>
@@ -248,23 +268,64 @@
         </div>
     </div>
 
-    <div class="modal fade bd-example-modal-lg" id="addRelationship" tabindex="-1" role="dialog"
+    <div class="modal fade bd-example-modal-lg" id="addUser" tabindex="-1" role="dialog"
          aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-lg" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Relationship</h5>
+                    <h5 class="modal-title" id="exampleModalLabel">User</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
-                <form method="POST" action="{{ url('addrelationship') }}">
+                <form method="POST" action="{{ url('adduser') }}">
                     @csrf
                     <div class="modal-body">
-                        <div class="form-group row">
-                            <label for="relationshipType" class="col-lg-2 col-form-label">Type:</label>
-                            <div class="col-lg-10">
-                                <input type="text" class="form-control" id="type" name="type" value="">
+                        <div class=" row">
+                            <div class="row">
+                                <label for="nickname"
+                                       class="col-sm-2 col-form-label">Nickname:</label>
+                                <div class="col-sm-10 form-group ">
+                                    <input type="text" class="form-control" id="nickname"
+                                           name="nickname"
+                                           value="">
+                                </div>
+                                <label for="email"
+                                       class="col-sm-2 col-form-label">Email:</label>
+                                <div class="col-sm-10 form-group ">
+                                    <input type="text" class="form-control" id="email" name="email"
+                                           value="">
+                                </div>
+                                <label for="password"
+                                       class="col-sm-2 col-form-label">Password:</label>
+                                <div class="col-sm-10 form-group ">
+                                    <input type="password" class="form-control" id="password" name="password"
+                                           value="">
+                                </div>
+                                <label for="msc"
+                                       class="col-sm-2 col-form-label">Msc:</label>
+                                <div class="col-sm-10 form-group ">
+                                    <input type="text" class="form-control " id="msc" name="msc"
+                                           value="">
+                                </div>
+                                <label for="s"
+                                       class="col-sm-2 col-form-label">S:</label>
+                                <div class="col-sm-10 form-group ">
+                                    <input type="text" class="form-control" id="s" name="s"
+                                           value="">
+                                </div>
+                                <label for="p"
+                                       class="col-sm-2 col-form-label">P:</label>
+                                <div class="col-sm-10 form-group ">
+                                    <input type="text" class="form-control" id="p" name="p"
+                                           value="">
+                                </div>
+                                <label for="e"
+                                       class="col-sm-2 col-form-label">E:</label>
+                                <div class="col-sm-10 form-group ">
+                                    <input type="text" class="form-control" id="e" name="e"
+                                           value="">
+                                </div>
                             </div>
                         </div>
                     </div>

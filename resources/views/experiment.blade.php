@@ -60,11 +60,11 @@
                     <tr>
                         <td>{{ $count }}</td>
                         <td>{{$experiemnt_result->name}}</td>
-                        <td>{{ date("d.M.Y", $experiemnt_result->start_timestamp) }}</td>
-                        <td>{{ date("d.M.Y", $experiemnt_result->end_timestamp) }}</td>
+                        <td>{{ $experiment_result->start_timestamp>0? date("m/d/Y",$experiment_result->start_timestamp): 0}}</td>
+                        <td>{{ $experiment_result->end_timestamp>0? date("m/d/Y",$experiment_result->end_timestamp): 0 }}</td>
                         <td class="text-right">
                             <button type="button" class="btn btn-secondary btn-sm js-tooltip-enabled "
-                                    data-placement="bottom" title="Relationship" data-toggle="tooltip"
+                                    data-placement="bottom" title="Edit" data-toggle="tooltip"
                                     onclick="location.href = '/experimentedit?edit_id={{$experiemnt_result->id}}'"><span
                                     data-feather="edit"></span></button>
                         </td>

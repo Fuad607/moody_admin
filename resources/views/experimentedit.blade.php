@@ -129,6 +129,8 @@
         </div>
         <br>
         <h1 class="h2">Experiment Result</h1>
+        <a  class="btn btn-secondary"  href="{{ url('/downloadexperiment?id='.$experiment_result->id ) }}">Download Csv</a>
+        <br>
         <br>
        <div class="row">
            <div class="col-lg-1"> <p style="border-style: solid;" class="text-center"> Mood</div>

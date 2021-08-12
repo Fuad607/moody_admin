@@ -108,6 +108,7 @@ class UsersController extends Controller
         $user->id = $request->input('id');
         $user->nickname = $request->input('nickname');
         $user->email = $request->input('email');
+        $user->password = (string)password_hash($request->input('password'), PASSWORD_DEFAULT);
         $user->msc = $request->input('msc');
         $user->s = $request->input('s');
         $user->p = $request->input('p');

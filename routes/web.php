@@ -29,6 +29,7 @@ Route::get('/experiment', 'ExperimentController@index')->name('experiment');
 Route::get('/experiment/createexperiment', 'ExperimentController@createexperiment')->name('createexperiment');
 Route::get('/experimentedit', 'ExperimentController@experimentedit')->name('experimentedit');
 Route::post('/setexperiement', 'ExperimentController@setexperiement')->name('setexperiement');
+Route::get('/downloadexperiment', 'ExperimentController@downloadexperiment')->name('downloadexperiment');
 
 
 Auth::routes();
@@ -44,14 +45,15 @@ Auth::routes();
 Route::get('/user', 'UserController@index')->name('user');
 Auth::routes();
 Route::post('/edituser', 'UserController@edituser')->name('edituser');
+Route::post('/adduser', 'UserController@adduser')->name('addtuser');
 Route::post('/saveuserrelationship', 'UserController@saveuserrelationship')->name('saveuserrelationship');
 Route::get('/user/deletecontact/id/{id}', 'UserController@deletecontact')->name('deletecontact');
 
 Auth::routes();
-Route::get('/registeruser', 'RegisterUserController@index')->name('registeruser');
-
-Auth::routes();
-Route::post('/registeruser', 'RegisterUserController@register')->name('registeruser');
+Route::get('/admin', 'AdminuserController@index')->name('admin');
+Route::post('/editadmin', 'AdminuserController@editadmin')->name('editadmin');
+Route::post('/addadmin', 'AdminuserController@addadmin')->name('addadmin');
+Route::post('/deleteadmin', 'AdminuserController@deleteadmin')->name('deleteadmin');
 
 
 Auth::routes();

@@ -23,9 +23,17 @@ class ExperimentsController extends Controller
     {
         $where_condition = 'WHERE ';
 
-        $experiments = DB::select("SELECT experiments.* FROM experiments WHERE  start_timestamp <" . time() . " AND end_timestamp >" . time() . "  AND user_ids IN ('" . $request->user_id . "') ");
+        $experiments = DB::select("SELECT experiments.* FROM experiments WHERE  start_timestamp <=" . time() . " AND end_timestamp >=" . time() );
 
-        return $experiments;
+        $user_ids=$experiments[0]->user_ids;
+        $user_ids = explode(", ", $user_ids);
+        $return_array=[];
+        foreach ((array)$user_ids as $id) {
+            if($id==$request->user_id){
+                $return_array=$experiments;
+            }
+        }
+        return $return_array;
     }
 
     /**
@@ -184,7 +192,6 @@ class ExperimentsController extends Controller
 
         $end_date = explode("/", $request->input('end_timestamp'));
         $end = mktime(23, 59, 59, $end_date[0], $end_date[1], $end_date[2]);
-
 
         $experiment->name = $request->input('name');
         $experiment->frequency = $request->input('frequency');

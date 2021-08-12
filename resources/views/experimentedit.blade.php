@@ -9,13 +9,20 @@
                     </div>
                 </div>
             @endif
-            @if (!empty($status))
-                <div class="col-lg-12">
-                    <div class="alert alert-success" role="alert">
-                        {{ $status }}
+                @if ($status==1)
+                    <div class="col-lg-12">
+                        <div class="alert alert-success" role="alert">
+                            The user data successfully changed!
+                        </div>
                     </div>
-                </div>
-            @endif
+                @endif
+                @if ($status==2)
+                    <div class="col-lg-12">
+                        <div class="alert alert-success" role="alert">
+                            The user successfully added!
+                        </div>
+                    </div>
+                @endif
             <div
                 class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
                 <h1 class="h2">Experiment</h1>

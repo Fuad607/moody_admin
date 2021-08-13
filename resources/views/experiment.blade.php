@@ -53,19 +53,19 @@
                     </thead>
                     <tbody>
                     <?php $count = 1;
-                    foreach($experiment_results as $experiemnt_result){
-                        if(empty($experiemnt_result->name))
+                    foreach($experiment_results as $experiment_result){
+                        if(empty($experiment_result->name))
                             continue;
                     ?>
                     <tr>
                         <td>{{ $count }}</td>
-                        <td>{{$experiemnt_result->name}}</td>
+                        <td>{{$experiment_result->name}}</td>
                         <td>{{ $experiment_result->start_timestamp>0? date("m/d/Y",$experiment_result->start_timestamp): 0}}</td>
                         <td>{{ $experiment_result->end_timestamp>0? date("m/d/Y",$experiment_result->end_timestamp): 0 }}</td>
                         <td class="text-right">
                             <button type="button" class="btn btn-secondary btn-sm js-tooltip-enabled "
                                     data-placement="bottom" title="Edit" data-toggle="tooltip"
-                                    onclick="location.href = '/experimentedit?edit_id={{$experiemnt_result->id}}'"><span
+                                    onclick="location.href = '/experimentedit?edit_id={{$experiment_result->id}}'"><span
                                     data-feather="edit"></span></button>
                         </td>
                     </tr>

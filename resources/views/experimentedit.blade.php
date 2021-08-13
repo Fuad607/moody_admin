@@ -217,7 +217,6 @@
         <?php
         } ?>
     </div>
-
     <script>
         $('.start_timestamp').datepicker({
             uiLibrary: 'bootstrap4'

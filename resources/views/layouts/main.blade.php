@@ -112,13 +112,13 @@
                     </li>
                     <li class="nav-item">
                         <a class="nav-link {{ $status_nav=="admin"? "active":""  }}"  href="{{ url('/admin') }}">
-                            <span data-feather="user"></span>
+                            <span data-feather="user-check"></span>
                             {{ __('Admin') }}
                         </a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link {{ $status_nav=="user"? "active":""  }}" href="{{ url('/user') }}">
-                            <span data-feather="user"></span>
+                            <span data-feather="users"></span>
                             {{ __('Users') }}
                         </a>
                     </li>

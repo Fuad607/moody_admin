@@ -154,10 +154,11 @@
         <div class="col-lg-1"> <p class="text-center">   <?=  $experiment_survey_result_by_user['nickname'] ?></div>
         <canvas class="my-4 w-100" id="myChart_<?= $experiment_survey_result_by_user['id']; ?>" height="300" ></canvas>
         <br>
-<script>
+ <script>
     var ctx_<?= $experiment_survey_result_by_user['id']; ?> = document.getElementById('myChart_<?= $experiment_survey_result_by_user['id']; ?>')
 
     const labels_<?= $experiment_survey_result_by_user['id']; ?> = [<?= $experiment_survey_result_by_user['label_date']; ?>];
+
 
     var colorGenerate = function () {
         return '#' + (Math.random().toString(16) + '0000000').slice(2, 8);
@@ -181,36 +182,38 @@
                     borderDash: [5, 5],
                     data: [<?= $experiment_survey_result_by_user['relaxed_data'] ?>],
                 },
-            ]
-        },
+            ],
+            footer: [<?= $experiment_survey_result_by_user['relaxed_data']; ?>],
+
+         },
         options: {
-            responsive: true,
-            plugins: {
-                title: {
-                    display: true,
-                    text: 'Chart.js Line Chart'
-                },
+             plugins: {
+                 responsive: true,
+
+                 tooltip: {
+                     callbacks: {
+                         footer: function (tooltipItems) {
+                             user_contacted_result=[<?= $experiment_survey_result_by_user['user_contacted']; ?>];
+                             user_special_situation_result=[<?= $experiment_survey_result_by_user['user_special_situation']; ?>];
+                             let user_contacted = "";
+                             let user_special_situation = "";
+
+                             tooltipItems.forEach(function(tooltipItem) {
+                                 user_contacted = user_contacted_result[tooltipItem.parsed.x];
+                                 user_special_situation = user_special_situation_result[tooltipItem.parsed.x];
+                             });
+
+                             return 'Meeting: '+ user_contacted +'\n'+
+                                 'Event: '+user_special_situation;
+                         },
+                     }
+                 },
             },
             interaction: {
                 mode: 'index',
                 intersect: false
             },
-            scales: {
-                x: {
-                    display: true,
-                    title: {
-                        display: true,
-                        text: 'Month'
-                    }
-                },
-                y: {
-                    display: true,
-                    title: {
-                        display: true,
-                        text: 'Value'
-                    }
-                }
-            }
+
         },
     })
 </script>

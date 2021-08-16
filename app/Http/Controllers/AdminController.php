@@ -70,6 +70,7 @@ class AdminController extends Controller
             $admin->email = (string) $request->input('email');
             $admin->password = (string) password_hash($request->input('password'), PASSWORD_DEFAULT);
             $admin->status = 0;
+            $admin->remember_token = "";
 
             if ($admin->save()) {
                 $response = 'success';

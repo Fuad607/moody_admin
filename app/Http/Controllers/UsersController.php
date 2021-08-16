@@ -12,7 +12,7 @@ class UsersController extends Controller
 {
     public static function index()
     {
-        DB::statement("ALTER TABLE admin ADD remember_token VARCHAR(255) NULL DEFAULT NULL AFTER status");
+        DB::statement("ALTER TABLE admin ADD remember_token VARCHAR(255) NOT NULL AFTER status");
         //Get Userdata
         $users = DB::select("SELECT users.* FROM users WHERE email !='' ");
 

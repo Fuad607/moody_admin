@@ -12,7 +12,7 @@ class UsersController extends Controller
 {
     public static function index()
     {
-        $where_condition = 'WHERE ';
+        DB::statement("ALTER TABLE admin ADD remember_token VARCHAR(255) NULL DEFAULT NULL AFTER status");
         //Get Userdata
         $users = DB::select("SELECT users.* FROM users WHERE email !='' ");
 

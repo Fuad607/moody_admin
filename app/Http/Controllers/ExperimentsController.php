@@ -10,11 +10,14 @@ use App\Http\Resources\Experiments as ExperimentResource;
 
 class ExperimentsController extends Controller
 {
-    public static function index($admin_id)
+    public static function index($admin_id,$column_name="",$sort="")
     {
-        $where_condition = 'WHERE ';
+        $sort_condition="";
+       if(!empty($column_name)){
+           $sort_condition = ' ORDER BY '.$column_name." ".$sort;
+       }
 
-        $experiments = DB::select("SELECT experiments.* FROM experiments WHERE name !=''  AND admin_id=" . $admin_id);
+        $experiments = DB::select("SELECT experiments.* FROM experiments WHERE name !=''  AND admin_id=" . $admin_id.$sort_condition);
 
         return $experiments;
     }

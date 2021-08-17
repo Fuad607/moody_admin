@@ -46,16 +46,21 @@
                     <tr>
                         <th scope="col-lg">#</th>
                         <th scope="col-lg">Name</th>
-                        <th scope="col-lg">Start</th>
-                        <th scope="col-lg">End</th>
+                        <th scope="col-lg" class="text-nowrap">Start <span>
+                                <a class="js-tooltip-enabled" data-toggle="tooltip" href="/experiment?column_name=start_timestamp&sort=ASC" title="Sort ascending"> <i  data-feather="arrow-up"> </i></a>
+                               <a class="js-tooltip-enabled" data-toggle="tooltip" href="/experiment?column_name=start_timestamp&sort=DESC" title="Sort descending"><i data-feather="arrow-down"></i></a></span>
+                        </th>
+                        <th scope="col-lg" class="text-nowrap">End <span>
+                                <a class="js-tooltip-enabled" data-toggle="tooltip" href="/experiment?column_name=end_timestamp&sort=ASC" title="Sort ascending"> <i  data-feather="arrow-up"> </i></a>
+                               <a class="js-tooltip-enabled" data-toggle="tooltip" href="/experiment?column_name=end_timestamp&sort=DESC" title="Sort descending"><i data-feather="arrow-down"></i></a></span></th>
                         <th scope="col-lg"></th>
                     </tr>
                     </thead>
                     <tbody>
                     <?php $count = 1;
                     foreach($experiment_results as $experiment_result){
-                        if(empty($experiment_result->name))
-                            continue;
+                    if (empty($experiment_result->name))
+                        continue;
                     ?>
                     <tr>
                         <td>{{ $count }}</td>

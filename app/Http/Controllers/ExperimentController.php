@@ -47,7 +47,7 @@ class ExperimentController extends Controller
     {
         $admin_id = auth()->user()->id;
         $experiments = new ExperimentsController();
-        $experiment_results = $experiments->index($admin_id);
+        $experiment_results = $experiments->index($admin_id,$request->column_name,$request->sort);
 
         return view('experiment', ['status_nav' => 'experiment', 'experiment_results' => $experiment_results, 'status' => $request->status]);
     }

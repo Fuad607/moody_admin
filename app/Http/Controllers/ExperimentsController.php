@@ -27,6 +27,8 @@ class ExperimentsController extends Controller
         $experiments = DB::select("SELECT experiments.* FROM experiments WHERE  start_timestamp <=" . time() . " AND end_timestamp >=" . time());
 
         $return_array = [];
+        $return_array['current']="";
+        $return_array['future']="";
         if (!empty($experiments)) {
             $user_ids = $experiments[0]->user_ids;
             $user_ids = explode(", ", $user_ids);

@@ -26,16 +26,15 @@ class ExperimentsController extends Controller
     {
         $experiments = DB::select("SELECT experiments.* FROM experiments WHERE  start_timestamp <=" . time() . " AND end_timestamp >=" . time());
 
-        $return_array = [];
-        $return_array['current']=[];
-        $return_array['future']=[];
+        $current=[];
+        $future=[];
         if (!empty($experiments)) {
             $user_ids = $experiments[0]->user_ids;
             $user_ids = explode(", ", $user_ids);
 
             foreach ((array)$user_ids as $id) {
                 if ($id == $request->user_id) {
-                    $return_array['current'] = $experiments[0];
+                    $current = $experiments[0];
                 }
             }
         } else {
@@ -47,13 +46,13 @@ class ExperimentsController extends Controller
 
                 foreach ((array)$user_ids as $id) {
                     if ($id == $request->user_id) {
-                        $return_array['future'] = $future_experiments[0];
+                        $future = $future_experiments[0];
                     }
                 }
             }
         }
 
-        return $return_array;
+        return response()->json(['current' => $current, 'future' => $future]);
     }
 
     /**

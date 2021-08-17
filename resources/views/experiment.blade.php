@@ -31,6 +31,13 @@
                     </div>
                 </div>
             @endif
+                @if ($status==4)
+                <div class="col-lg-12">
+                    <div class="alert alert-danger" role="alert">
+                        The experiment successfully deleted!
+                    </div>
+                </div>
+            @endif
             <div
                 class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
                 <h1 class="h2">{{ __('Users') }}</h1>
@@ -72,8 +79,43 @@
                                     data-placement="bottom" title="Edit" data-toggle="tooltip"
                                     onclick="location.href = '/experimentedit?edit_id={{$experiment_result->id}}'"><span
                                     data-feather="edit"></span></button>
+                            <button type="button " class="btn btn-secondary btn-sm js-tooltip-enabled "
+                                    data-toggle="modal" data-placement="bottom"
+                                    title="Delete"
+                                    data-target="#delete_experiment_{{$experiment_result->id}}"><span data-feather="trash-2"></span>
+                            </button>
                         </td>
                     </tr>
+                    <div class="modal fade bd-example-modal-lg" id="delete_experiment_{{$experiment_result->id}}"
+                         tabindex="-1" role="dialog"
+                         aria-labelledby="exampleModalLabel" aria-hidden="true">
+                        <div class="modal-dialog modal-lg" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="exampleModalLabel">Experiment</h5>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                                <form method="POST" action="{{ url('deleteexperiment') }}">
+                                    @csrf
+                                    <div class="modal-body">
+                                        <div class="row">
+                                            <label for="name"
+                                                   class="col-lg-12 col-form-label">Are you sure to delete the experiment?</label>
+                                        </div>
+                                    </div>
+                                    <input type="hidden" class="form-control" id="id" name="id"
+                                           value="{{$experiment_result->id}}">
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close
+                                        </button>
+                                        <button type="submit" class="btn btn-primary">Delete</button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
                     <?php $count++;
                     } ?>
                     </tbody>

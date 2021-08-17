@@ -29,6 +29,7 @@ Route::get('/experiment', 'ExperimentController@index')->name('experiment');
 Route::get('/experiment/createexperiment', 'ExperimentController@createexperiment')->name('createexperiment');
 Route::get('/experimentedit', 'ExperimentController@experimentedit')->name('experimentedit');
 Route::post('/setexperiement', 'ExperimentController@setexperiement')->name('setexperiement');
+Route::post('/deleteexperiment', 'ExperimentController@deleteexperiment')->name('deleteexperiment');
 Route::get('/downloadexperiment', 'ExperimentController@downloadexperiment')->name('downloadexperiment');
 
 

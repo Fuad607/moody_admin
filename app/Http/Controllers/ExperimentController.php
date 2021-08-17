@@ -84,6 +84,14 @@ class ExperimentController extends Controller
             'experiment_survey_results' => $experiment_survey_results['result'] , 'experiment_survey_result_by_users' => $experiment_survey_result_by_users,
             'label_date' => $experiment_survey_results['label_date']]);
     }
+    public function deleteexperiment(Request $request)
+    {
+        $experiment=new ExperimentsController();
+        $experiment->destroy($request->id);
+        $return_message['status'] = 4;
+
+        return Redirect::route('experiment', $return_message);
+    }
 
     public function setexperiement(Request $request)
     {

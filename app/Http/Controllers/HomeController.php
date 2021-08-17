@@ -26,8 +26,8 @@ class HomeController extends Controller
     public function index(Request $request)
     {
         $admin_id = auth()->user()->id;
-        $total_experiments = DB::select('SELECT COUNT(*) as total FROM experiments WHERE admin_id=' . $admin_id)[0]->total;
-        $total_users = DB::select('SELECT COUNT(*) as total FROM users' )[0]->total;
+        $total_experiments = DB::select("SELECT COUNT(*) as total FROM experiments WHERE name !='' AND admin_id=" . $admin_id)[0]->total;
+        $total_users = DB::select("SELECT COUNT(*) as total FROM users WHERE nickname !=''" )[0]->total;
 
         return view('home', ['status_nav' => 'dashboard', 'total_experiments' => $total_experiments, 'total_users' => $total_users, 'status' => $request->status]);
     }

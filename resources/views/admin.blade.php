@@ -26,7 +26,7 @@
             @endif
             @if ($status==3)
                 <div class="col-lg-12">
-                    <div class="alert alert-success" role="alert">
+                    <div class="alert alert-danger" role="alert">
                         The admin successfully deleted!
                     </div>
                 </div>

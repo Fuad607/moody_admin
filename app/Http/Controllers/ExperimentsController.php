@@ -10,14 +10,14 @@ use App\Http\Resources\Experiments as ExperimentResource;
 
 class ExperimentsController extends Controller
 {
-    public static function index($admin_id,$column_name="",$sort="")
+    public static function index($admin_id, $column_name = "", $sort = "")
     {
-        $sort_condition="";
-       if(!empty($column_name)){
-           $sort_condition = ' ORDER BY '.$column_name." ".$sort;
-       }
+        $sort_condition = "";
+        if (!empty($column_name)) {
+            $sort_condition = ' ORDER BY ' . $column_name . " " . $sort;
+        }
 
-        $experiments = DB::select("SELECT experiments.* FROM experiments WHERE name !=''  AND admin_id=" . $admin_id.$sort_condition);
+        $experiments = DB::select("SELECT experiments.* FROM experiments WHERE name !=''  AND admin_id=" . $admin_id . $sort_condition);
 
         return $experiments;
     }
@@ -26,14 +26,31 @@ class ExperimentsController extends Controller
     {
         $experiments = DB::select("SELECT experiments.* FROM experiments WHERE  start_timestamp <=" . time() . " AND end_timestamp >=" . time());
 
-        $user_ids = $experiments[0]->user_ids;
-        $user_ids = explode(", ", $user_ids);
         $return_array = [];
-        foreach ((array)$user_ids as $id) {
-            if ($id == $request->user_id) {
-                $return_array = $experiments;
+        if (!empty($experiments)) {
+            $user_ids = $experiments[0]->user_ids;
+            $user_ids = explode(", ", $user_ids);
+
+            foreach ((array)$user_ids as $id) {
+                if ($id == $request->user_id) {
+                    $return_array['current'] = $experiments[0];
+                }
+            }
+        } else {
+            $future_experiments = DB::select("SELECT experiments.* FROM experiments WHERE  start_timestamp >" . time() . " Order by start_timestamp ASC");
+
+            if (!empty($future_experiments)) {
+                $user_ids = $future_experiments[0]->user_ids;
+                $user_ids = explode(", ", $user_ids);
+
+                foreach ((array)$user_ids as $id) {
+                    if ($id == $request->user_id) {
+                        $return_array['future'] = $future_experiments[0];
+                    }
+                }
             }
         }
+
         return $return_array;
     }
 
@@ -154,7 +171,7 @@ class ExperimentsController extends Controller
                 $mood_level = "";
                 $relaxed_level = "";
                 $label = "";
-                $user_contacted ="";
+                $user_contacted = "";
                 $user_special_situation = "";
 
                 $experiment_results = DB::select(
@@ -168,19 +185,19 @@ class ExperimentsController extends Controller
                 foreach ($experiment_results as $experiment_result) {
                     $nickname = $experiment_result->nickname;
 
-                    $contacted_user="";
+                    $contacted_user = "";
                     $mood_level .= $experiment_result->mood_level . ", ";
                     $relaxed_level .= $experiment_result->relaxed_level . ", ";
                     $label .= " '" . date("d.M.Y", $experiment_result->timestamp) . "', ";
 
-                    $usermeeting= new UsermeetingController();
+                    $usermeeting = new UsermeetingController();
                     $userspecialsituation = new UserspecialsituationController();
 
-                    $user_meeting_results=$usermeeting->index($experiment_result->survey_id);
-                    $user_special_situation_results=$userspecialsituation->index($experiment_result->survey_id);
-                    $meeting_type="";
+                    $user_meeting_results = $usermeeting->index($experiment_result->survey_id);
+                    $user_special_situation_results = $userspecialsituation->index($experiment_result->survey_id);
+                    $meeting_type = "";
 
-                    foreach ($user_meeting_results as $user_meeting_result){
+                    foreach ($user_meeting_results as $user_meeting_result) {
 
                         if ($user_meeting_result->contacted_user_id > 0) {
                             $user = self::getUser($user_meeting_result->contacted_user_id);
@@ -198,32 +215,32 @@ class ExperimentsController extends Controller
 
                             }
 
-                            $contacted_user .= $user[0]->nickname." ".$meeting_type.", ";
+                            $contacted_user .= $user[0]->nickname . " " . $meeting_type . ", ";
                         }
                     }
                     $contacted_user = substr($contacted_user, 0, -2);
 
-                    $user_contacted .="'".$contacted_user."', ";
+                    $user_contacted .= "'" . $contacted_user . "', ";
 
-                    $special_situation_type="";
-                    $special_situation="";
-                   foreach ($user_special_situation_results as $user_special_situation_result){
-                       if(!empty($user_special_situation_result->special_situation)){
-                           if ($user_special_situation_result->special_situation_type == 0) {
-                               $special_situation_type="Negative";
-                           } elseif ($user_special_situation_result->special_situation_type == 1) {
-                               $special_situation_type="Positive";
-                           }
+                    $special_situation_type = "";
+                    $special_situation = "";
+                    foreach ($user_special_situation_results as $user_special_situation_result) {
+                        if (!empty($user_special_situation_result->special_situation)) {
+                            if ($user_special_situation_result->special_situation_type == 0) {
+                                $special_situation_type = "Negative";
+                            } elseif ($user_special_situation_result->special_situation_type == 1) {
+                                $special_situation_type = "Positive";
+                            }
 
-                           $special_situation .=$user_special_situation_result->special_situation." ".$special_situation_type.", ";
-                       }
-                     }
+                            $special_situation .= $user_special_situation_result->special_situation . " " . $special_situation_type . ", ";
+                        }
+                    }
                     $special_situation = substr($special_situation, 0, -2);
 
-                    $user_special_situation .="'".$special_situation."', ";
+                    $user_special_situation .= "'" . $special_situation . "', ";
 
                 }
-                if(!empty($nickname)){
+                if (!empty($nickname)) {
                     $mood_data = substr($mood_level, 0, -2);
                     $relaxed_data = substr($relaxed_level, 0, -2);
                     $label_date = substr($label, 0, -2);
@@ -352,38 +369,38 @@ class ExperimentsController extends Controller
         );
 
         foreach ($survey_result as $result) {
-           if(in_array($result->user_id,$user_ids)){
-               $contacted_user_id = "";
-               $meeting_type = "";
-               $special_situation_type = "";
-               if ($result->contacted_user_id > 0) {
-                   $user = self::getUser($result->contacted_user_id);
-                   $contacted_user_id = $user[0]->nickname;
-               }
-               $date_time = date("d.M.Y", $result->timestamp);
-               switch ($result->meeting_type) {
-                   case 1:
-                       $meeting_type = "F2F";
-                       break;
-                   case 2:
-                       $meeting_type = "Video";
-                       break;
-                   case 3:
-                       $meeting_type = "Other";
-                       break;
+            if (in_array($result->user_id, $user_ids)) {
+                $contacted_user_id = "";
+                $meeting_type = "";
+                $special_situation_type = "";
+                if ($result->contacted_user_id > 0) {
+                    $user = self::getUser($result->contacted_user_id);
+                    $contacted_user_id = $user[0]->nickname;
+                }
+                $date_time = date("d.M.Y", $result->timestamp);
+                switch ($result->meeting_type) {
+                    case 1:
+                        $meeting_type = "F2F";
+                        break;
+                    case 2:
+                        $meeting_type = "Video";
+                        break;
+                    case 3:
+                        $meeting_type = "Other";
+                        break;
 
-               };
-               if(!empty($result->special_situation)){
-                   if ($result->special_situation_type == 0) {
-                       $special_situation_type="Negative";
-                   } elseif ($result->special_situation_type == 1) {
-                       $special_situation_type="Positive";
-                   }
-               }
+                };
+                if (!empty($result->special_situation)) {
+                    if ($result->special_situation_type == 0) {
+                        $special_situation_type = "Negative";
+                    } elseif ($result->special_situation_type == 1) {
+                        $special_situation_type = "Positive";
+                    }
+                }
 
-               $return_array[] = array($result->nickname, $result->mood_level, $result->relaxed_level, $date_time, $contacted_user_id, $meeting_type, $result->special_situation,$special_situation_type);
+                $return_array[] = array($result->nickname, $result->mood_level, $result->relaxed_level, $date_time, $contacted_user_id, $meeting_type, $result->special_situation, $special_situation_type);
 
-           }
+            }
         }
 
         return $return_array;

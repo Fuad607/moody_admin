@@ -78,9 +78,7 @@ class   SurveyController extends Controller
         $contacted_user_ids=str_replace('"','',$contacted_user_ids);
         $contacted_user_ids = explode(",", $contacted_user_ids);
         $contacted_users_array = [];
-        print_r($request->contacted_user_ids);
-        print_r($contacted_user_ids);
-        exit;
+
         foreach ($contacted_user_ids as $contacted_user_id){
             if(is_numeric($contacted_user_id)){
                 $contacted_users_array[]=array('user_id' => (int)$contacted_user_id);

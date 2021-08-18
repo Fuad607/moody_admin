@@ -96,6 +96,7 @@ class   SurveyController extends Controller
         $users_array[] = array('user_id' => (int)$user_id);
         $users_array = array_merge($contacted_users_array, $users_array);
      print_r(array_unique($users_array,'user_id'));
+     exit;
         $return_array = [];
         $return_data = [];
 

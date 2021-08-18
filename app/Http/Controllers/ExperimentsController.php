@@ -24,7 +24,7 @@ class ExperimentsController extends Controller
 
     public static function getCurrentExperiment(Request $request)
     {
-        $experiments = DB::select("SELECT experiments.* FROM experiments WHERE  start_timestamp <=" . time() . " AND end_timestamp >=" . time());
+        $experiments = DB::select("SELECT experiments.* FROM experiments WHERE  start_timestamp <=" . time() . " AND end_timestamp >" . time());
         $future_experiments = DB::select("SELECT experiments.* FROM experiments WHERE  start_timestamp >" . time() . " Order by start_timestamp ASC");
         $old_experiments = DB::select("SELECT experiments.* FROM experiments WHERE  start_timestamp <=" . time() . " AND end_timestamp <=" . time());
 

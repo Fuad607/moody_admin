@@ -25,9 +25,12 @@ class ExperimentsController extends Controller
     public static function getCurrentExperiment(Request $request)
     {
         $experiments = DB::select("SELECT experiments.* FROM experiments WHERE  start_timestamp <=" . time() . " AND end_timestamp >=" . time());
+        $future_experiments = DB::select("SELECT experiments.* FROM experiments WHERE  start_timestamp >" . time() . " Order by start_timestamp ASC");
+        $old_experiments = DB::select("SELECT experiments.* FROM experiments WHERE  start_timestamp <=" . time() . " AND end_timestamp <=" . time());
 
         $current=new \stdClass();
         $future=new \stdClass();
+        $old=new \stdClass();
         if (!empty($experiments)) {
             $user_ids = $experiments[0]->user_ids;
             $user_ids = explode(", ", $user_ids);
@@ -37,11 +40,8 @@ class ExperimentsController extends Controller
                     $current = $experiments[0];
                 }
             }
-        } else {
-            $future_experiments = DB::select("SELECT experiments.* FROM experiments WHERE  start_timestamp >" . time() . " Order by start_timestamp ASC");
-
-            if (!empty($future_experiments)) {
-                $user_ids = $future_experiments[0]->user_ids;
+        } elseif (!empty($future_experiments)){
+            $user_ids = $future_experiments[0]->user_ids;
                 $user_ids = explode(", ", $user_ids);
 
                 foreach ((array)$user_ids as $id) {
@@ -49,10 +49,20 @@ class ExperimentsController extends Controller
                         $future = $future_experiments[0];
                     }
                 }
-            }
+
+        }elseif (!empty($old_experiments)){
+            $user_ids = $old_experiments[0]->user_ids;
+                $user_ids = explode(", ", $user_ids);
+
+                foreach ((array)$user_ids as $id) {
+                    if ($id == $request->user_id) {
+                        $old = $old_experiments[0];
+                    }
+                }
+
         }
 
-        return response()->json(['current' => $current, 'future' => $future]);
+        return response()->json(['current' => $current, 'future' => $future, 'old' => $old]);
     }
 
     /**

@@ -75,7 +75,7 @@ class   SurveyController extends Controller
     {
         $user_id = $request->user_id;
         $contacted_user_ids = $request->contacted_user_ids;
-
+        $contacted_user_ids=str_replace('"','',$contacted_user_ids);
         $contacted_user_ids = explode(",", $contacted_user_ids);
         $contacted_users_array = [];
         print_r($request->contacted_user_ids);

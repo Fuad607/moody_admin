@@ -80,7 +80,8 @@ class   SurveyController extends Controller
         $contacted_users_array = [];
 
         foreach ($contacted_user_ids as $contacted_user_id){
-            if(is_numeric($contacted_user_id)){
+
+            if(is_numeric($contacted_user_id) && ( $contacted_user_id!=$user_id)){
                 $contacted_users_array[]=array('user_id' => (int)$contacted_user_id);
             }
         }
@@ -95,8 +96,7 @@ class   SurveyController extends Controller
         */
         $users_array[] = array('user_id' => (int)$user_id);
         $users_array = array_merge($contacted_users_array, $users_array);
-     print_r(array_unique($users_array,'user_id'));
-     exit;
+
         $return_array = [];
         $return_data = [];
 

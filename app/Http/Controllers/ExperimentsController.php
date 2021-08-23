@@ -98,7 +98,7 @@ class ExperimentsController extends Controller
         $return_array = [];
 
         $label_date = "";
-
+        $count = 1;
         if (!empty($experiments[0]->user_ids)) {
             foreach ((array)$user_ids as $id) {
 
@@ -142,7 +142,9 @@ class ExperimentsController extends Controller
                     $mood_level .= $mood . ", ";
                     $relaxed_level .= $relaxed . ", ";
 
-                    $label_date .= " '" . date("d.M.Y", $start_timestamp) . "', ";
+                    if($count==1){
+                        $label_date .= " '" . date("d.M.Y", $start_timestamp) . "', ";
+                    }
 
                     $start_timestamp = strtotime("+1 day", $start_timestamp);
                     $end_time = strtotime("+1 day", $end_time);
@@ -157,6 +159,7 @@ class ExperimentsController extends Controller
                     $return_array['result'][$id]['mood_data'] = $mood_data;
                     $return_array['result'][$id]['relaxed_data'] = $relaxed_data;
                 }
+                $count++;
             }
         } else {
             $return_array['result'] = [];
@@ -190,7 +193,7 @@ class ExperimentsController extends Controller
                             survey.user_id , users.nickname,survey.id as survey_id
                                FROM survey
                                LEFT JOIN users on users.id=survey.user_id
-                   WHERE users.id =' . $id
+                   WHERE users.id =' . $id.  ' AND survey.timestamp >=' . $experiments[0]->start_timestamp . '  AND survey.timestamp<=' . $experiments[0]->end_timestamp
                 );
 
                 foreach ($experiment_results as $experiment_result) {

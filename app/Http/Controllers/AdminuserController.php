@@ -47,13 +47,20 @@ class AdminuserController extends Controller
 
         return view('admin', ['status_nav' => 'admin', 'admin_results' => $admin_results, 'status' => $request->status]);
     }
+    public function adminedit(Request $request)
+    {
+        $admins = new AdminController();
+        $admin_result = $admins->show($request->id);
+
+        return view('adminedit', ['status_nav' => 'admin', 'admin_result' => $admin_result, 'status' => $request->status]);
+    }
 
     protected function validator(array $data)
     {
         return Validator::make($data, [
             'name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
-            'password' => ['required', 'string', 'min:8', 'confirmed'],
+            'password' => ['required', 'string', 'confirmed'],
         ]);
     }
 

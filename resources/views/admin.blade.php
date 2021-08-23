@@ -43,9 +43,8 @@
                 <h1 class="h2">{{ __('Admins') }}</h1>
             </div>
             <div class="col-lg-12">
-                <form method="POST" action="{{ url('addadmin') }}">
+                <form method="POST" action="{{ url('addadmin') }}" enctype="multipart/form-data" id="addadmin">
                     @csrf
-
                     <div class="row">
                         <label for="name"
                                class="col-lg-2 col-form-label">Name:</label>
@@ -91,9 +90,8 @@
                                    autocomplete="new-password">
                         </div>
                     </div>
-
                     <div class="modal-footer">
-                        <button type="submit" class="btn btn-primary">Add Admin</button>
+                        <button type="submit" class="btn btn-primary footer-form-button">Add Admin</button>
                     </div>
                 </form>
             </div>
@@ -118,8 +116,7 @@
                             <td class="text-right">
                                 <button type="button " class="btn btn-secondary btn-sm js-tooltip-enabled "
                                         data-toggle="modal" data-placement="bottom"
-                                        title="Edit"
-                                        data-target="#edit_admin_{{$admin->id}}"><span data-feather="edit"></span>
+                                        title="Edit" onclick="location.href = '/adminedit?id={{$admin->id}}'"><span data-feather="edit"></span>
                                 </button>
                                 <button type="button " class="btn btn-secondary btn-sm js-tooltip-enabled "
                                         data-toggle="modal" data-placement="bottom"
@@ -129,41 +126,6 @@
                             </td>
                         </tr>
                         <?php $count++; ?>
-                        <div class="modal fade bd-example-modal-lg" id="edit_admin_{{$admin->id}}"
-                             tabindex="-1" role="dialog"
-                             aria-labelledby="exampleModalLabel" aria-hidden="true">
-                            <div class="modal-dialog modal-lg" role="document">
-                                <div class="modal-content">
-                                    <div class="modal-header">
-                                        <h5 class="modal-title" id="exampleModalLabel">Admin</h5>
-                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                            <span aria-hidden="true">&times;</span>
-                                        </button>
-                                    </div>
-                                    <form method="POST" action="{{ url('editadmin') }}">
-                                        @csrf
-                                        <div class="modal-body">
-                                            <div class="row">
-                                                <label for="name"
-                                                       class="col-lg-2 col-form-label">Name:</label>
-                                                <div class="col-lg-10 form-group ">
-                                                    <input type="text" class="form-control" id="name"
-                                                           name="name"
-                                                           value="{{$admin->name}}">
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <input type="hidden" class="form-control" id="id" name="id"
-                                               value="{{$admin->id}}">
-                                        <div class="modal-footer">
-                                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close
-                                            </button>
-                                            <button type="submit" class="btn btn-primary">Submit</button>
-                                        </div>
-                                    </form>
-                                </div>
-                            </div>
-                        </div>
                         <div class="modal fade bd-example-modal-lg" id="delete_admin_{{$admin->id}}"
                              tabindex="-1" role="dialog"
                              aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -180,10 +142,11 @@
                                         <div class="modal-body">
                                             <div class="row">
                                                 <label for="name"
-                                                       class="col-lg-12 col-form-label">Are you sure to delete the admin?</label>
+                                                       class="col-lg-12 col-form-label">Are you sure to delete the
+                                                    admin?</label>
                                             </div>
                                         </div>
-                                        <input type="hidden" class="form-control" id="id" name="id"
+                                        <input type="hidden" class="form-control" id="id_{{$admin->id}}" name="id"
                                                value="{{$admin->id}}">
                                         <div class="modal-footer">
                                             <button type="button" class="btn btn-secondary" data-dismiss="modal">Close
@@ -200,7 +163,6 @@
             </div>
         </div>
     </div>
-
     <div class="modal fade bd-example-modal-lg" id="addAdmin" tabindex="-1" role="dialog"
          aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-lg" role="document">
@@ -215,5 +177,53 @@
             </div>
         </div>
     </div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.3/jquery.validate.min.js"
+            integrity="sha512-37T7leoNS06R80c8Ulq7cdCDU5MNQBwlYoy1TX/WUsLFC2eYNqtKlV0QjH7r8JpG/S0GUMZwebnVFLPd6SU5yg=="
+            crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 
+    <script>
+        jQuery("#addadmin").validate({
+            errorClass: "invalid-feedback animated fadeIn",
+            errorElement: "div",
+            errorPlacement: function (e, r) {
+                jQuery(r).addClass("is-invalid"), jQuery(r).parents(".form-group").append(e);
+            },
+            highlight: function (e) {
+                jQuery(e).parents(".form-group").find(".is-invalid").removeClass("is-invalid").addClass("is-invalid");
+            },
+            unhighlight: function (e) {
+                jQuery(e).parents(".form-group").find(".is-invalid").removeClass("is-invalid");
+            },
+            success: function (e) {
+                jQuery(e).parents(".form-group").find(".is-invalid").removeClass("is-invalid"), jQuery(e).remove();
+            },
+            showErrors: function (errorMap, errorList) {
+                if (this.numberOfInvalids() == 0) {
+                    $(".footer-form-button").attr("disabled", false);
+                } else {
+                    $(".footer-form-button").attr("disabled", true);
+                }
+                this.defaultShowErrors();
+            },
+            rules: {
+                name: {
+                    required: true
+                },
+                email: {
+                    required: true,
+                    email: true
+                },
+                password: {
+                    required: true
+                },
+                password_confirmation: {
+                    required: true,
+                    equalTo: "#password"
+                }
+
+            }
+        });
+    </script>
 @endsection
+
+

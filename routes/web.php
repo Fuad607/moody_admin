@@ -52,6 +52,7 @@ Route::get('/user/deletecontact/id/{id}', 'UserController@deletecontact')->name(
 
 Auth::routes();
 Route::get('/admin', 'AdminuserController@index')->name('admin');
+Route::get('/adminedit', 'AdminuserController@adminedit')->name('adminedit');
 Route::post('/editadmin', 'AdminuserController@editadmin')->name('editadmin');
 Route::post('/addadmin', 'AdminuserController@addadmin')->name('addadmin');
 Route::post('/deleteadmin', 'AdminuserController@deleteadmin')->name('deleteadmin');

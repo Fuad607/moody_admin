@@ -81,7 +81,7 @@ class   SurveyController extends Controller
 
         foreach ($contacted_user_ids as $contacted_user_id){
 
-            if(is_numeric($contacted_user_id) && ( $contacted_user_id!=$user_id)){
+            if(is_numeric($contacted_user_id) && ($contacted_user_id!=$user_id)){
                 $contacted_users_array[]=array('user_id' => (int)$contacted_user_id);
             }
         }

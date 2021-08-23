@@ -69,6 +69,7 @@
                     </div>
                     <input type="hidden" class="form-control" name="id" value="{{$admin_result->id}}">
                     <button type="submit" class="btn btn-primary footer-form-button-edit">Submit</button>
+                    <button type="button" class="btn btn-secondary" onclick="location.href = '/admin'">Back</button>
                 </form>
         </div>
     </div>

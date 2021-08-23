@@ -143,7 +143,7 @@ class ExperimentsController extends Controller
                     $relaxed_level .= $relaxed . ", ";
 
                     if($count==1){
-                        $label_date .= " '" . date("d.M.Y", $start_timestamp) . "', ";
+                        $label_date .= " '" . date("d.m.y", $start_timestamp) . "', ";
                     }
 
                     $start_timestamp = strtotime("+1 day", $start_timestamp);
@@ -202,7 +202,7 @@ class ExperimentsController extends Controller
                     $contacted_user = "";
                     $mood_level .= $experiment_result->mood_level . ", ";
                     $relaxed_level .= $experiment_result->relaxed_level . ", ";
-                    $label .= " '" . date("d.M.Y", $experiment_result->timestamp) . "', ";
+                    $label .= " '" . date("d.M.y", $experiment_result->timestamp) . "', ";
 
                     $usermeeting = new UsermeetingController();
                     $userspecialsituation = new UserspecialsituationController();

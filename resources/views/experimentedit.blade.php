@@ -189,7 +189,6 @@
         options: {
              plugins: {
                  responsive: true,
-
                  tooltip: {
                      callbacks: {
                          footer: function (tooltipItems) {
@@ -214,6 +213,22 @@
                 intersect: false
             },
 
+        scales: {
+            x: {
+                display: true,
+                title: {
+                    display: true,
+                    text: 'Date'
+                }
+            },
+            y: {
+                display: true,
+                title: {
+                    display: true,
+                    text: 'Value'
+                }
+            }
+        }
         },
     })
 </script>
@@ -275,7 +290,7 @@
                 plugins: {
                     title: {
                         display: true,
-                        text: 'Chart.js Line Chart'
+                        text: 'Users data per date'
                     },
                 },
                 interaction: {
@@ -287,7 +302,7 @@
                         display: true,
                         title: {
                             display: true,
-                            text: 'Month'
+                            text: 'Date'
                         }
                     },
                     y: {

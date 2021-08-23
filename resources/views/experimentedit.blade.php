@@ -12,14 +12,14 @@
                 @if ($status==1)
                     <div class="col-lg-12">
                         <div class="alert alert-success" role="alert">
-                            The user data successfully changed!
+                            The experiment data successfully changed!
                         </div>
                     </div>
                 @endif
                 @if ($status==2)
                     <div class="col-lg-12">
                         <div class="alert alert-success" role="alert">
-                            The user successfully added!
+                            The experiment successfully added!
                         </div>
                     </div>
                 @endif

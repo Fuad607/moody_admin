@@ -1,7 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="a1a29bfc-0438-47c9-a396-1a2e3ef3bb22" name="Default Changelist" comment="commit new staff" />
+    <list default="true" id="a1a29bfc-0438-47c9-a396-1a2e3ef3bb22" name="Default Changelist" comment="commit new staff">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/experiment.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/experiment.blade.php" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -205,7 +208,7 @@
       <workItem from="1629202067724" duration="9367000" />
       <workItem from="1629266110664" duration="247000" />
       <workItem from="1629324853400" duration="2878000" />
-      <workItem from="1629353061883" duration="9200000" />
+      <workItem from="1629353061883" duration="9468000" />
     </task>
     <task id="LOCAL-00001" summary="commit new staff">
       <created>1624001586431</created>

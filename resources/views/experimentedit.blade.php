@@ -151,7 +151,7 @@
         foreach ($experiment_survey_result_by_users as $experiment_survey_result_by_user){
         ?>
 
-        <div class="col-lg-1"> <p class="text-center">   <?=  $experiment_survey_result_by_user['nickname'] ?></div>
+        <div class="col-lg-12"> <p class=""> User nickname:  <?=  $experiment_survey_result_by_user['nickname'] ?></div>
         <canvas class="my-4 w-100" id="myChart_<?= $experiment_survey_result_by_user['id']; ?>" height="300" ></canvas>
         <br>
  <script>

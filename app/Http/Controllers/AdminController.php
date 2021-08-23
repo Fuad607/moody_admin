@@ -92,8 +92,8 @@ class AdminController extends Controller
 
         $admin->id = $request->input('id');
         $admin->name = $request->input('name');
- /*       $admin->email = $request->input('email');
-        $admin->password = $request->input('password');*/
+      //$admin->email = $request->input('email');
+        $admin->password = $request->input('password');
         // $admin->created_at=time();
 
         if ($admin->save()) {

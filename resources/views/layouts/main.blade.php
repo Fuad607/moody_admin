@@ -56,14 +56,7 @@
         }
 
 
-        .modal {
-            position: fixed;
-            top: 3%;
-            right: 3%;
-            left: 3%;
-            width: auto;
-            margin: 0;
-        }
+
 
 
         .modal-body {

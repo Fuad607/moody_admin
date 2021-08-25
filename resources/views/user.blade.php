@@ -93,7 +93,7 @@
                             </td>
                         </tr>
                         <?php $count++; ?>
-                        <div class="modal fade bd-example-modal-lg" id="edit_user_{{$user->id}}"
+                        <div class="modal fade  show bd-example-modal-lg" id="edit_user_{{$user->id}}"
                              tabindex="-1" role="dialog"
                              aria-labelledby="exampleModalLabel" aria-hidden="true">
                             <div class="modal-dialog modal-lg" role="document">
@@ -165,7 +165,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="modal fade bd-example-modal-lg" id="edit_user_contact_{{$user->id}}"
+                        <div class="modal fade  show bd-example-modal-lg" id="edit_user_contact_{{$user->id}}"
                              tabindex="-1" role="dialog"
                              aria-labelledby="exampleModalLabel" aria-hidden="true">
                             <div class="modal-dialog modal-lg" role="document">

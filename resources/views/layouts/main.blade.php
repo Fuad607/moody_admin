@@ -48,7 +48,7 @@
         }
 
         .modal.fade {
-            z-index: 10000000 !important;
+            z-index: 1040 !important;
         }
     </style>
 

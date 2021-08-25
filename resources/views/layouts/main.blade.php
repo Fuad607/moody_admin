@@ -48,7 +48,38 @@
         }
 
         .modal.fade {
-            z-index: 1040 !important;
+            z-index: 1000 !important;
+        }
+        .modal-backdrop.fade {
+            opacity: 0;
+            filter: alpha(opacity=0);
+        }
+        .modal-backdrop.fade.in {
+            opacity: 0.5;
+            filter: alpha(opacity=50);
+        }
+        .modal-backdrop
+        {
+            opacity:0.5 !important;
+        }
+
+        .modal {
+            position: fixed;
+            top: 3%;
+            right: 3%;
+            left: 3%;
+            width: auto;
+            margin: 0;
+        }
+        .modal-body {
+            height: 60%;
+        }
+
+        .modal-body {
+            max-height: 350px;
+            padding: 15px;
+            overflow-y: auto;
+            -webkit-overflow-scrolling: touch;
         }
     </style>
 

@@ -156,6 +156,16 @@
         $('body').find('.tooltip[role="tooltip"].show').remove();
     });
 
+
+    (document).ready(function() { ('.modal-button')
+    .css('cursor', 'pointer')
+    .click(function(e) {
+            e.preventDefault();
+            ('.modal-background').fadeIn(); }); ('.modal-window').click(function(e) {
+            e.preventDefault();
+            $('.modal-background').fadeOut();
+        });
+    });
 </script>
 </body>
 </html>

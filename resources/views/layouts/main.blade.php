@@ -46,14 +46,6 @@
                 font-size: 3.5rem;
             }
         }
-
-        .modal.fade {
-            z-index: 1000 !important;
-        }
-        .modal-backdrop.fade {
-            opacity: 0;
-            filter: alpha(opacity=0);
-        }
     </style>
 
     <script src="https://cdn.jsdelivr.net/npm/feather-icons@4.28.0/dist/feather.min.js"
@@ -165,15 +157,7 @@
     });
 
 
-    (document).ready(function() { ('.modal-button')
-    .css('cursor', 'pointer')
-    .click(function(e) {
-            e.preventDefault();
-            ('.modal-background').fadeIn(); }); ('.modal-window').click(function(e) {
-            e.preventDefault();
-            $('.modal-background').fadeOut();
-        });
-    });
+
 </script>
 </body>
 </html>

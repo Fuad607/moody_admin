@@ -54,16 +54,6 @@
             opacity: 0;
             filter: alpha(opacity=0);
         }
-
-
-        .modal {
-            position: absolute;
-            top: auto;
-            right: 30%;
-            left: 30%;
-            width: auto;
-            margin: 0;
-        }
     </style>
 
     <script src="https://cdn.jsdelivr.net/npm/feather-icons@4.28.0/dist/feather.min.js"

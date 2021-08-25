@@ -56,14 +56,19 @@
         }
 
 
-
+        .modal {
+            position: absolute;
+            top: 3%;
+            right: 3%;
+            left: 3%;
+            width: auto;
+            margin: 0;
+        }
 
 
         .modal-body {
-
             overflow-y: auto;
-            -webkit-overflow-scrolling: touch;
-        }
+         }
     </style>
 
     <script src="https://cdn.jsdelivr.net/npm/feather-icons@4.28.0/dist/feather.min.js"

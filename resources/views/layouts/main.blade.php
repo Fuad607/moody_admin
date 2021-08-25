@@ -46,6 +46,10 @@
                 font-size: 3.5rem;
             }
         }
+
+        .modal.fade {
+            z-index: 10000000 !important;
+        }
     </style>
 
     <script src="https://cdn.jsdelivr.net/npm/feather-icons@4.28.0/dist/feather.min.js"

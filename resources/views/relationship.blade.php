@@ -61,7 +61,7 @@
                         <?php $count++; ?>
                         <div class="modal fade  show bd-example-modal-lg" id="edit_relationship_{{$relation_type->id}}"
                              tabindex="-1" role="dialog"
-                             aria-labelledby="modal-block-normal" data-backdrop="static" aria-hidden="true">
+                             aria-labelledby="exampleModalLabel_{{$relation_type->id}}" data-backdrop="static" aria-hidden="true">
                             <div class="modal-dialog modal-lg" role="document">
                                 <div class="modal-content">
                                     <div class="modal-header">

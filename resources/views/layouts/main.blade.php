@@ -52,19 +52,18 @@
         }
         .modal-backdrop.fade {
             opacity: 0;
+            filter: alpha(opacity=0);
         }
 
 
         .modal {
             position: absolute;
+            top: auto;
+            right: 30%;
+            left: 30%;
             width: auto;
             margin: 0;
         }
-
-
-        .modal-body {
-            overflow-y: auto;
-         }
     </style>
 
     <script src="https://cdn.jsdelivr.net/npm/feather-icons@4.28.0/dist/feather.min.js"

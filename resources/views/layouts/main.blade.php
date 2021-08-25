@@ -52,15 +52,11 @@
         }
         .modal-backdrop.fade {
             opacity: 0;
-            filter: alpha(opacity=0);
         }
 
 
         .modal {
             position: absolute;
-            top: 3%;
-            right: 3%;
-            left: 3%;
             width: auto;
             margin: 0;
         }

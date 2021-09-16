@@ -121,7 +121,7 @@
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/resources/views" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="node.js.detected.package.eslint" value="true" />
     <property name="node.js.detected.package.tslint" value="true" />
     <property name="node.js.selected.package.eslint" value="(autodetect)" />
@@ -207,7 +207,9 @@
       <workItem from="1629202067724" duration="9367000" />
       <workItem from="1629266110664" duration="247000" />
       <workItem from="1629324853400" duration="2878000" />
-      <workItem from="1629353061883" duration="17884000" />
+      <workItem from="1629353061883" duration="17932000" />
+      <workItem from="1631000463546" duration="85000" />
+      <workItem from="1631827489618" duration="345000" />
     </task>
     <task id="LOCAL-00001" summary="commit new staff">
       <created>1624001586431</created>
